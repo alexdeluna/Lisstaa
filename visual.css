@@ -1,0 +1,219 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f5f7;
+    color: #222;
+}
+
+header {
+    background: #2875e8;
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 18px;
+}
+
+main {
+    width: 100%;
+    max-width: 720px;
+    margin: auto;
+    padding: 20px 14px 40px;
+}
+
+/* RESUMO */
+
+.resumo {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+
+.resumo-item {
+    text-align: center;
+}
+
+.resumo-item strong {
+    display: block;
+    font-size: 30px;
+}
+
+.resumo-item span {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 15px;
+}
+
+/* PRODUTO */
+
+.produto {
+    background: white;
+    border-radius: 16px;
+    padding: 17px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+
+.produto.comprado {
+    background: #e8f6ec;
+    opacity: .75;
+}
+
+.produto-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.produto-topo h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.produto-topo span {
+    background: #eaf1ff;
+    color: #2875e8;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* CAMPOS */
+
+.produto-conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+.valor-unitario {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 17px;
+}
+
+.botao-comprado {
+    align-self: end;
+    border: 0;
+    border-radius: 9px;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.produto.comprado .botao-comprado {
+    background: #6c757d;
+}
+
+/* SUBTOTAL */
+
+.subtotal {
+    margin-top: 12px;
+    color: #555;
+}
+
+.subtotal strong {
+    font-size: 17px;
+    color: #222;
+}
+
+/* RODAPÉ */
+
+.rodape {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 19px;
+}
+
+.total strong {
+    color: #2875e8;
+    font-size: 28px;
+}
+
+.acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.acoes button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-marcar {
+    background: #343a40;
+    color: white;
+}
+
+.botao-limpar {
+    background: #dc3545;
+    color: white;
+}
+
+/* CELULAR */
+
+@media (max-width: 500px) {
+
+    .produto-conteudo {
+        grid-template-columns: 1fr;
+    }
+
+    .produto-topo h2 {
+        font-size: 18px;
+    }
+
+    .total {
+        font-size: 18px;
+    }
+
+    .total strong {
+        font-size: 25px;
+    }
+}
