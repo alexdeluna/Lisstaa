@@ -53,9 +53,9 @@
     <main>
 
 
-        <!-- =====================================================
-             TELA PRINCIPAL
-             ===================================================== -->
+        <!-- =================================================
+             MENU PRINCIPAL
+             ================================================= -->
 
         <section
             id="telaPrincipal"
@@ -67,6 +67,7 @@
                 <h2>
                     Menu Principal
                 </h2>
+
 
                 <button
                     id="botaoCriarLista"
@@ -88,9 +89,9 @@
         </section>
 
 
-        <!-- =====================================================
-             TELA CRIAR LISTA
-             ===================================================== -->
+        <!-- =================================================
+             CRIAR / EDITAR LISTA
+             ================================================= -->
 
         <section
             id="telaCriarLista"
@@ -98,13 +99,12 @@
         >
 
 
-            <!-- NOME DA LISTA -->
-
             <div class="cartao">
 
                 <h2>
                     Nova Lista
                 </h2>
+
 
                 <div class="campo">
 
@@ -124,7 +124,9 @@
             </div>
 
 
-            <!-- CADASTRO DO ITEM -->
+            <!-- ---------------------------------------------
+                 ADICIONAR ITEM
+                 --------------------------------------------- -->
 
             <div class="cartao">
 
@@ -177,7 +179,9 @@
             </div>
 
 
-            <!-- ITENS DA LISTA -->
+            <!-- ---------------------------------------------
+                 ITENS
+                 --------------------------------------------- -->
 
             <div class="cartao">
 
@@ -223,9 +227,9 @@
         </section>
 
 
-        <!-- =====================================================
-             TELA MINHAS LISTAS
-             ===================================================== -->
+        <!-- =================================================
+             MINHAS LISTAS
+             ================================================= -->
 
         <section
             id="telaMinhasListas"
@@ -239,8 +243,8 @@
                 </h2>
 
                 <p>
-                    Aqui ficam as listas que você preparou
-                    anteriormente.
+                    Escolha uma lista para comprar,
+                    visualizar ou usar novamente.
                 </p>
 
             </div>
@@ -248,9 +252,13 @@
 
             <div id="listasSalvas">
 
-                <p class="lista-vazia">
-                    Nenhuma lista salva.
-                </p>
+                <div class="cartao">
+
+                    <p class="lista-vazia">
+                        Nenhuma lista salva.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -269,9 +277,9 @@
         </section>
 
 
-        <!-- =====================================================
-             TELA VISUALIZAR LISTA
-             ===================================================== -->
+        <!-- =================================================
+             VISUALIZAR LISTA
+             ================================================= -->
 
         <section
             id="telaVisualizarLista"
@@ -290,9 +298,7 @@
             </div>
 
 
-            <div
-                id="itensListaVisualizacao"
-            >
+            <div id="itensListaVisualizacao">
 
             </div>
 
@@ -300,10 +306,26 @@
             <div class="cartao">
 
                 <button
-                    id="botaoUsarListaVisualizacao"
+                    id="botaoComprarVisualizacao"
                     class="botao botao-principal"
                 >
+                    Comprar esta lista
+                </button>
+
+
+                <button
+                    id="botaoUsarListaVisualizacao"
+                    class="botao botao-sucesso"
+                >
                     Usar esta lista novamente
+                </button>
+
+
+                <button
+                    id="botaoExcluirVisualizacao"
+                    class="botao botao-excluir"
+                >
+                    Excluir lista
                 </button>
 
 
@@ -319,9 +341,9 @@
         </section>
 
 
-        <!-- =====================================================
-             TELA COMPRAR
-             ===================================================== -->
+        <!-- =================================================
+             COMPRAR ITENS
+             ================================================= -->
 
         <section
             id="telaComprar"
@@ -345,7 +367,9 @@
             </div>
 
 
-            <!-- TOTAL -->
+            <!-- ---------------------------------------------
+                 TOTAL
+                 --------------------------------------------- -->
 
             <div class="cartao">
 
@@ -374,7 +398,7 @@
                     id="botaoVoltarLista"
                     class="botao botao-secundario"
                 >
-                    Voltar para lista
+                    Voltar para minhas listas
                 </button>
 
             </div>
@@ -385,12 +409,7 @@
     </main>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-         ===================================================== -->
-
     <script src="app.js"></script>
-
 
 </body>
 
