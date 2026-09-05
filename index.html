@@ -33,9 +33,9 @@
 <body>
 
 
-    <!-- ================================================= -->
-    <!-- CABEÇALHO -->
-    <!-- ================================================= -->
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
 
     <header>
 
@@ -53,9 +53,9 @@
     <main>
 
 
-        <!-- ================================================= -->
-        <!-- TELA PRINCIPAL -->
-        <!-- ================================================= -->
+        <!-- =====================================================
+             TELA PRINCIPAL
+             ===================================================== -->
 
         <section
             id="telaPrincipal"
@@ -68,10 +68,6 @@
                     Menu Principal
                 </h2>
 
-                <p>
-                    Crie uma nova lista de compras.
-                </p>
-
                 <button
                     id="botaoCriarLista"
                     class="botao botao-principal"
@@ -79,28 +75,63 @@
                     Criar nova lista
                 </button>
 
+
+                <button
+                    id="botaoMinhasListas"
+                    class="botao botao-secundario"
+                >
+                    Minhas listas
+                </button>
+
             </div>
 
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- TELA CRIAR LISTA -->
-        <!-- ================================================= -->
+        <!-- =====================================================
+             TELA CRIAR LISTA
+             ===================================================== -->
 
         <section
             id="telaCriarLista"
             class="tela escondido"
         >
 
+
+            <!-- NOME DA LISTA -->
+
             <div class="cartao">
 
                 <h2>
-                    Criar Lista
+                    Nova Lista
                 </h2>
 
+                <div class="campo">
 
-                <!-- FORMULÁRIO -->
+                    <label for="nomeLista">
+                        Nome da lista
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeLista"
+                        placeholder="Ex.: Lista semanal"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CADASTRO DO ITEM -->
+
+            <div class="cartao">
+
+                <h2>
+                    Adicionar item
+                </h2>
+
 
                 <div class="campo">
 
@@ -146,9 +177,7 @@
             </div>
 
 
-            <!-- ================================================= -->
             <!-- ITENS DA LISTA -->
-            <!-- ================================================= -->
 
             <div class="cartao">
 
@@ -178,12 +207,58 @@
                     id="botaoFinalizarLista"
                     class="botao botao-sucesso"
                 >
-                    Finalizar lista
+                    Salvar lista
                 </button>
 
 
                 <button
-                    id="botaoVoltarPrincipal"
+                    id="botaoCancelarLista"
+                    class="botao botao-secundario"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TELA MINHAS LISTAS
+             ===================================================== -->
+
+        <section
+            id="telaMinhasListas"
+            class="tela escondido"
+        >
+
+            <div class="cartao">
+
+                <h2>
+                    Minhas Listas
+                </h2>
+
+                <p>
+                    Aqui ficam as listas que você preparou
+                    anteriormente.
+                </p>
+
+            </div>
+
+
+            <div id="listasSalvas">
+
+                <p class="lista-vazia">
+                    Nenhuma lista salva.
+                </p>
+
+            </div>
+
+
+            <div class="cartao">
+
+                <button
+                    id="botaoVoltarPrincipalListas"
                     class="botao botao-secundario"
                 >
                     Menu principal
@@ -194,9 +269,59 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- TELA COMPRAR ITENS -->
-        <!-- ================================================= -->
+        <!-- =====================================================
+             TELA VISUALIZAR LISTA
+             ===================================================== -->
+
+        <section
+            id="telaVisualizarLista"
+            class="tela escondido"
+        >
+
+            <div class="cartao">
+
+                <h2 id="tituloListaVisualizacao">
+                    Lista
+                </h2>
+
+                <p id="informacoesListaVisualizacao">
+                </p>
+
+            </div>
+
+
+            <div
+                id="itensListaVisualizacao"
+            >
+
+            </div>
+
+
+            <div class="cartao">
+
+                <button
+                    id="botaoUsarListaVisualizacao"
+                    class="botao botao-principal"
+                >
+                    Usar esta lista novamente
+                </button>
+
+
+                <button
+                    id="botaoVoltarMinhasListas"
+                    class="botao botao-secundario"
+                >
+                    Minhas listas
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TELA COMPRAR
+             ===================================================== -->
 
         <section
             id="telaComprar"
@@ -205,13 +330,11 @@
 
             <div class="cartao">
 
-                <h2>
+                <h2 id="tituloListaCompra">
                     Comprar Itens
                 </h2>
 
-                <p>
-                    Informe o valor de cada item e marque
-                    quando ele for comprado.
+                <p id="informacoesListaCompra">
                 </p>
 
             </div>
@@ -219,14 +342,10 @@
 
             <div id="listaCompra">
 
-                <!-- Os itens serão inseridos pelo app.js -->
-
             </div>
 
 
-            <!-- ================================================= -->
             <!-- TOTAL -->
-            <!-- ================================================= -->
 
             <div class="cartao">
 
@@ -244,6 +363,14 @@
 
 
                 <button
+                    id="botaoFinalizarCompra"
+                    class="botao botao-sucesso"
+                >
+                    Finalizar compra
+                </button>
+
+
+                <button
                     id="botaoVoltarLista"
                     class="botao botao-secundario"
                 >
@@ -258,9 +385,9 @@
     </main>
 
 
-    <!-- ================================================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ================================================= -->
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
 
     <script src="app.js"></script>
 
