@@ -1,3 +1,7 @@
+/* =====================================================
+   RESET
+   ===================================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -9,6 +13,11 @@ body {
     background: #f3f5f7;
     color: #222;
 }
+
+
+/* =====================================================
+   CABEÇALHO
+   ===================================================== */
 
 header {
     background: #2875e8;
@@ -27,6 +36,11 @@ header p {
     font-size: 17px;
 }
 
+
+/* =====================================================
+   ÁREA PRINCIPAL
+   ===================================================== */
+
 main {
     width: 100%;
     max-width: 720px;
@@ -39,8 +53,13 @@ main {
 }
 
 .escondido {
-    display: none;
+    display: none !important;
 }
+
+
+/* =====================================================
+   CARTÕES
+   ===================================================== */
 
 .cartao {
     background: white;
@@ -61,7 +80,10 @@ main {
     line-height: 1.5;
 }
 
-/* CAMPOS */
+
+/* =====================================================
+   CAMPOS
+   ===================================================== */
 
 .campo {
     margin-bottom: 15px;
@@ -90,7 +112,10 @@ main {
     border-color: #2875e8;
 }
 
-/* BOTÕES */
+
+/* =====================================================
+   BOTÕES
+   ===================================================== */
 
 .botao {
     width: 100%;
@@ -122,7 +147,20 @@ main {
     color: white;
 }
 
-/* TÍTULO DA LISTA */
+.botao-editar {
+    background: #ffc107;
+    color: #222;
+}
+
+.botao-excluir {
+    background: #dc3545;
+    color: white;
+}
+
+
+/* =====================================================
+   TÍTULO DA LISTA
+   ===================================================== */
 
 .titulo-lista {
     display: flex;
@@ -146,7 +184,10 @@ main {
     white-space: nowrap;
 }
 
-/* LISTA */
+
+/* =====================================================
+   LISTA VAZIA
+   ===================================================== */
 
 .lista-vazia {
     text-align: center;
@@ -154,7 +195,10 @@ main {
     color: #777;
 }
 
-/* ITEM CADASTRADO */
+
+/* =====================================================
+   ITEM DA LISTA
+   ===================================================== */
 
 .item-lista {
     border: 1px solid #e1e1e1;
@@ -183,6 +227,7 @@ main {
     padding: 6px 10px;
     font-size: 14px;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .item-lista-acoes {
@@ -200,17 +245,106 @@ main {
     cursor: pointer;
 }
 
-.botao-editar {
-    background: #ffc107;
-    color: #222;
+
+/* =====================================================
+   LISTAS SALVAS
+   ===================================================== */
+
+.lista-salva {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.botao-excluir {
-    background: #dc3545;
-    color: white;
+.lista-salva-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-/* COMPRA */
+.lista-salva-nome {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.lista-salva-data {
+    color: #666;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.lista-salva-id {
+    background: #eaf1ff;
+    color: #2875e8;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.lista-salva-info {
+    margin-top: 12px;
+    color: #555;
+    font-size: 14px;
+}
+
+.lista-salva-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.lista-salva-acoes button {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   ITENS DA VISUALIZAÇÃO
+   ===================================================== */
+
+.item-visualizacao {
+    background: white;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+.item-visualizacao-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-visualizacao-nome {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item-visualizacao-quantidade {
+    background: #eaf1ff;
+    color: #2875e8;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   TELA DE COMPRA
+   ===================================================== */
 
 #listaCompra {
     width: 100%;
@@ -226,7 +360,7 @@ main {
 
 .item-compra.comprado {
     background: #e8f6ec;
-    opacity: 0.75;
+    opacity: 0.85;
 }
 
 .item-compra-topo {
@@ -288,6 +422,28 @@ main {
     background: #6c757d;
 }
 
+
+/* =====================================================
+   BOTÃO EDITAR ITEM DURANTE A COMPRA
+   ===================================================== */
+
+.botao-editar-compra {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px;
+    border: 0;
+    border-radius: 9px;
+    background: #ffc107;
+    color: #222;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   SUBTOTAL
+   ===================================================== */
+
 .subtotal {
     margin-top: 12px;
     color: #555;
@@ -298,7 +454,10 @@ main {
     font-size: 17px;
 }
 
-/* TOTAL */
+
+/* =====================================================
+   TOTAL
+   ===================================================== */
 
 .total {
     display: flex;
@@ -313,9 +472,25 @@ main {
     font-size: 28px;
 }
 
-/* CELULAR */
+
+/* =====================================================
+   RESPONSIVIDADE PARA CELULAR
+   ===================================================== */
 
 @media (max-width: 500px) {
+
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    .cartao {
+        padding: 17px;
+    }
 
     .item-compra-conteudo {
         grid-template-columns: 1fr;
