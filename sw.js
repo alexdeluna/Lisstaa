@@ -1,4 +1,4 @@
-const CACHE_NAME = "lista-compras-v1";
+const CACHE_NAME = "lista-compras-v1.1";
 
 const ARQUIVOS = [
     "./",
@@ -22,6 +22,8 @@ self.addEventListener("install", (evento) => {
 
     );
 
+    self.skipWaiting();
+
 });
 
 
@@ -29,19 +31,28 @@ self.addEventListener("activate", (evento) => {
 
     evento.waitUntil(
 
-        caches.keys().then((nomes) => {
+        caches.keys()
+            .then((chaves) => {
 
-            return Promise.all(
+                return Promise.all(
 
-                nomes
-                    .filter((nome) => nome !== CACHE_NAME)
-                    .map((nome) => caches.delete(nome))
+                    chaves
+                        .filter(
+                            (chave) =>
+                                chave !== CACHE_NAME
+                        )
+                        .map(
+                            (chave) =>
+                                caches.delete(chave)
+                        )
 
-            );
+                );
 
-        })
+            })
 
     );
+
+    self.clients.claim();
 
 });
 
@@ -53,8 +64,13 @@ self.addEventListener("fetch", (evento) => {
         caches.match(evento.request)
             .then((resposta) => {
 
-                return resposta ||
-                    fetch(evento.request);
+                if (resposta) {
+
+                    return resposta;
+
+                }
+
+                return fetch(evento.request);
 
             })
 
