@@ -24,7 +24,7 @@ const telaComprar =
 
 
 // =====================================================
-// ELEMENTOS - MENU PRINCIPAL
+// MENU PRINCIPAL
 // =====================================================
 
 const botaoCriarLista =
@@ -35,7 +35,7 @@ const botaoMinhasListas =
 
 
 // =====================================================
-// ELEMENTOS - CRIAR LISTA
+// CRIAR LISTA
 // =====================================================
 
 const nomeLista =
@@ -64,7 +64,7 @@ const botaoCancelarLista =
 
 
 // =====================================================
-// ELEMENTOS - MINHAS LISTAS
+// MINHAS LISTAS
 // =====================================================
 
 const listasSalvas =
@@ -77,7 +77,7 @@ const botaoVoltarPrincipalListas =
 
 
 // =====================================================
-// ELEMENTOS - VISUALIZAR LISTA
+// VISUALIZAÇÃO
 // =====================================================
 
 const tituloListaVisualizacao =
@@ -95,9 +95,19 @@ const itensListaVisualizacao =
         "itensListaVisualizacao"
     );
 
+const botaoComprarVisualizacao =
+    document.getElementById(
+        "botaoComprarVisualizacao"
+    );
+
 const botaoUsarListaVisualizacao =
     document.getElementById(
         "botaoUsarListaVisualizacao"
+    );
+
+const botaoExcluirVisualizacao =
+    document.getElementById(
+        "botaoExcluirVisualizacao"
     );
 
 const botaoVoltarMinhasListas =
@@ -107,7 +117,7 @@ const botaoVoltarMinhasListas =
 
 
 // =====================================================
-// ELEMENTOS - COMPRAS
+// COMPRA
 // =====================================================
 
 const tituloListaCompra =
@@ -149,6 +159,17 @@ let idListaAtual = null;
 
 
 // =====================================================
+// STORAGE
+// =====================================================
+
+const CHAVE_LISTAS =
+    "listasComprasV11";
+
+const CHAVE_RASCUNHO =
+    "listaAtualComprasV11";
+
+
+// =====================================================
 // INICIALIZAÇÃO
 // =====================================================
 
@@ -156,7 +177,7 @@ carregarListas();
 
 
 // =====================================================
-// GERAR IDENTIFICADOR
+// ID ÚNICO
 // =====================================================
 
 function gerarId() {
@@ -165,7 +186,7 @@ function gerarId() {
         Date.now().toString() +
         "-" +
         Math.floor(
-            Math.random() * 10000
+            Math.random() * 100000
         ).toString()
     );
 
@@ -178,20 +199,25 @@ function gerarId() {
 
 function obterDataAtual() {
 
-    const agora = new Date();
+    const agora =
+        new Date();
+
 
     const dia =
         String(
             agora.getDate()
         ).padStart(2, "0");
 
+
     const mes =
         String(
             agora.getMonth() + 1
         ).padStart(2, "0");
 
+
     const ano =
         agora.getFullYear();
+
 
     return `${dia}/${mes}/${ano}`;
 
@@ -199,13 +225,13 @@ function obterDataAtual() {
 
 
 // =====================================================
-// SALVAR NO LOCALSTORAGE
+// SALVAR LISTAS
 // =====================================================
 
 function salvarListas() {
 
     localStorage.setItem(
-        "listasComprasV11",
+        CHAVE_LISTAS,
         JSON.stringify(
             listasSalvasDados
         )
@@ -222,7 +248,7 @@ function carregarListas() {
 
     const dados =
         localStorage.getItem(
-            "listasComprasV11"
+            CHAVE_LISTAS
         );
 
 
@@ -239,6 +265,17 @@ function carregarListas() {
 
         listasSalvasDados =
             JSON.parse(dados);
+
+
+        if (
+            !Array.isArray(
+                listasSalvasDados
+            )
+        ) {
+
+            listasSalvasDados = [];
+
+        }
 
     } catch (erro) {
 
@@ -263,29 +300,27 @@ function mostrarTela(tela) {
     const telas = [
 
         telaPrincipal,
-
         telaCriarLista,
-
         telaMinhasListas,
-
         telaVisualizarLista,
-
         telaComprar
 
     ];
 
 
-    telas.forEach((telaItem) => {
+    telas.forEach(
+        (telaItem) => {
 
-        if (telaItem) {
+            if (telaItem) {
 
-            telaItem.classList.add(
-                "escondido"
-            );
+                telaItem.classList.add(
+                    "escondido"
+                );
+
+            }
 
         }
-
-    });
+    );
 
 
     tela.classList.remove(
@@ -304,7 +339,8 @@ function escaparHTML(texto) {
     const elemento =
         document.createElement("div");
 
-    elemento.textContent = texto;
+    elemento.textContent =
+        texto;
 
     return elemento.innerHTML;
 
@@ -312,7 +348,7 @@ function escaparHTML(texto) {
 
 
 // =====================================================
-// CRIAR NOVA LISTA
+// NOVA LISTA
 // =====================================================
 
 function iniciarNovaLista() {
@@ -326,6 +362,12 @@ function iniciarNovaLista() {
     nomeItem.value = "";
 
     quantidadeItem.value = "";
+
+
+    localStorage.removeItem(
+        CHAVE_RASCUNHO
+    );
+
 
     renderizarItensLista();
 
@@ -346,6 +388,7 @@ function adicionarItem() {
 
     const nome =
         nomeItem.value.trim();
+
 
     const quantidade =
         Number(
@@ -402,7 +445,7 @@ function adicionarItem() {
     quantidadeItem.value = "";
 
 
-    salvarListaAtualTemporaria();
+    salvarRascunho();
 
     renderizarItensLista();
 
@@ -412,16 +455,21 @@ function adicionarItem() {
 
 
 // =====================================================
-// SALVAR LISTA ATUAL TEMPORARIAMENTE
+// RASCUNHO
 // =====================================================
 
-function salvarListaAtualTemporaria() {
+function salvarRascunho() {
 
     localStorage.setItem(
-        "listaAtualComprasV11",
+        CHAVE_RASCUNHO,
         JSON.stringify({
-            nome: nomeLista.value.trim(),
-            itens: listaAtual
+
+            nome:
+                nomeLista.value.trim(),
+
+            itens:
+                listaAtual
+
         })
     );
 
@@ -429,14 +477,14 @@ function salvarListaAtualTemporaria() {
 
 
 // =====================================================
-// CARREGAR LISTA TEMPORÁRIA
+// RECUPERAR RASCUNHO
 // =====================================================
 
-function carregarListaTemporaria() {
+function carregarRascunho() {
 
     const dados =
         localStorage.getItem(
-            "listaAtualComprasV11"
+            CHAVE_RASCUNHO
         );
 
 
@@ -449,38 +497,42 @@ function carregarListaTemporaria() {
 
     try {
 
-        const listaTemporaria =
+        const rascunho =
             JSON.parse(dados);
 
 
         if (
-            listaTemporaria &&
-            Array.isArray(
-                listaTemporaria.itens
+            !rascunho ||
+            !Array.isArray(
+                rascunho.itens
             )
         ) {
 
-            listaAtual =
-                listaTemporaria.itens;
-
-            nomeLista.value =
-                listaTemporaria.nome || "";
-
-            return true;
+            return false;
 
         }
+
+
+        listaAtual =
+            rascunho.itens;
+
+
+        nomeLista.value =
+            rascunho.nome || "";
+
+
+        return true;
 
     } catch (erro) {
 
         console.error(
-            "Erro ao recuperar lista temporária:",
+            "Erro ao carregar rascunho:",
             erro
         );
 
+        return false;
+
     }
-
-
-    return false;
 
 }
 
@@ -513,55 +565,62 @@ function renderizarItensLista() {
     }
 
 
-    listaAtual.forEach((item) => {
+    listaAtual.forEach(
+        (item) => {
 
-        const elemento =
-            document.createElement("div");
-
-
-        elemento.className =
-            "item-lista";
-
-
-        elemento.innerHTML = `
-
-            <div class="item-lista-topo">
-
-                <span class="item-lista-nome">
-                    ${escaparHTML(item.nome)}
-                </span>
-
-                <span class="item-lista-quantidade">
-                    Qtd.: ${item.quantidade}
-                </span>
-
-            </div>
-
-            <div class="item-lista-acoes">
-
-                <button
-                    class="botao botao-editar"
-                    data-id="${item.id}"
-                >
-                    Editar
-                </button>
-
-                <button
-                    class="botao botao-excluir"
-                    data-id="${item.id}"
-                >
-                    Excluir
-                </button>
-
-            </div>
-        `;
+            const elemento =
+                document.createElement(
+                    "div"
+                );
 
 
-        listaItens.appendChild(
-            elemento
-        );
+            elemento.className =
+                "item-lista";
 
-    });
+
+            elemento.innerHTML = `
+
+                <div class="item-lista-topo">
+
+                    <span class="item-lista-nome">
+                        ${escaparHTML(item.nome)}
+                    </span>
+
+                    <span class="item-lista-quantidade">
+                        Qtd.: ${item.quantidade}
+                    </span>
+
+                </div>
+
+
+                <div class="item-lista-acoes">
+
+                    <button
+                        class="botao botao-editar"
+                        data-id="${item.id}"
+                    >
+                        Editar
+                    </button>
+
+
+                    <button
+                        class="botao botao-excluir"
+                        data-id="${item.id}"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+
+            `;
+
+
+            listaItens.appendChild(
+                elemento
+            );
+
+        }
+    );
 
 
     configurarBotoesLista();
@@ -570,45 +629,53 @@ function renderizarItensLista() {
 
 
 // =====================================================
-// BOTÕES EDITAR / EXCLUIR
+// BOTÕES DOS ITENS
 // =====================================================
 
 function configurarBotoesLista() {
 
     document
-        .querySelectorAll(".botao-editar")
-        .forEach((botao) => {
+        .querySelectorAll(
+            "#listaItens .botao-editar"
+        )
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    editarItem(
-                        botao.dataset.id
-                    );
+                        editarItem(
+                            botao.dataset.id
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
 
     document
-        .querySelectorAll(".botao-excluir")
-        .forEach((botao) => {
+        .querySelectorAll(
+            "#listaItens .botao-excluir"
+        )
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    excluirItem(
-                        botao.dataset.id
-                    );
+                        excluirItem(
+                            botao.dataset.id
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
 }
 
@@ -622,7 +689,8 @@ function editarItem(id) {
     const item =
         listaAtual.find(
             (item) =>
-                String(item.id) === String(id)
+                String(item.id) ===
+                String(id)
         );
 
 
@@ -694,12 +762,15 @@ function editarItem(id) {
     }
 
 
-    item.nome = nome;
+    item.nome =
+        nome;
 
-    item.quantidade = quantidade;
+
+    item.quantidade =
+        quantidade;
 
 
-    salvarListaAtualTemporaria();
+    salvarRascunho();
 
     renderizarItensLista();
 
@@ -715,7 +786,8 @@ function excluirItem(id) {
     const item =
         listaAtual.find(
             (item) =>
-                String(item.id) === String(id)
+                String(item.id) ===
+                String(id)
         );
 
 
@@ -728,7 +800,7 @@ function excluirItem(id) {
 
     const confirmar =
         confirm(
-            `Excluir "${item.nome}"?`
+            `Deseja excluir "${item.nome}"?`
         );
 
 
@@ -742,11 +814,12 @@ function excluirItem(id) {
     listaAtual =
         listaAtual.filter(
             (item) =>
-                String(item.id) !== String(id)
+                String(item.id) !==
+                String(id)
         );
 
 
-    salvarListaAtualTemporaria();
+    salvarRascunho();
 
     renderizarItensLista();
 
@@ -757,7 +830,7 @@ function excluirItem(id) {
 // SALVAR LISTA PREPARADA
 // =====================================================
 
-function finalizarLista() {
+function salvarListaPreparada() {
 
     const nome =
         nomeLista.value.trim();
@@ -796,8 +869,26 @@ function finalizarLista() {
         data: obterDataAtual(),
 
         itens:
-            JSON.parse(
-                JSON.stringify(listaAtual)
+            listaAtual.map(
+                (item) => ({
+
+                    id: gerarId(),
+
+                    nome: item.nome,
+
+                    quantidade: item.quantidade,
+
+                    valorUnitarioCentavos:
+                        Number(
+                            item.valorUnitarioCentavos
+                        ) || 0,
+
+                    comprado:
+                        Boolean(
+                            item.comprado
+                        )
+
+                })
             )
 
     };
@@ -812,7 +903,7 @@ function finalizarLista() {
 
 
     localStorage.removeItem(
-        "listaAtualComprasV11"
+        CHAVE_RASCUNHO
     );
 
 
@@ -822,12 +913,11 @@ function finalizarLista() {
         novaLista.id;
 
 
+    renderizarListasSalvas();
+
     mostrarTela(
         telaMinhasListas
     );
-
-
-    renderizarListasSalvas();
 
 }
 
@@ -846,6 +936,7 @@ function renderizarListasSalvas() {
     ) {
 
         listasSalvas.innerHTML = `
+
             <div class="cartao">
 
                 <p class="lista-vazia">
@@ -853,6 +944,7 @@ function renderizarListasSalvas() {
                 </p>
 
             </div>
+
         `;
 
         return;
@@ -873,6 +965,17 @@ function renderizarListasSalvas() {
                 "lista-salva";
 
 
+            const totalItens =
+                listaSalva.itens.length;
+
+
+            const itensComprados =
+                listaSalva.itens.filter(
+                    (item) =>
+                        item.comprado
+                ).length;
+
+
             elemento.innerHTML = `
 
                 <div class="lista-salva-topo">
@@ -891,6 +994,7 @@ function renderizarListasSalvas() {
 
                     </div>
 
+
                     <span class="lista-salva-id">
                         ID: ${listaSalva.id}
                     </span>
@@ -900,11 +1004,17 @@ function renderizarListasSalvas() {
 
                 <div class="lista-salva-info">
 
-                    ${listaSalva.itens.length}
+                    ${totalItens}
                     ${
-                        listaSalva.itens.length === 1
+                        totalItens === 1
                             ? "item"
                             : "itens"
+                    }
+
+                    ${
+                        itensComprados > 0
+                            ? ` • ${itensComprados} comprados`
+                            : ""
                     }
 
                 </div>
@@ -913,17 +1023,34 @@ function renderizarListasSalvas() {
                 <div class="lista-salva-acoes">
 
                     <button
-                        class="botao botao-principal botao-visualizar-lista"
+                        class="botao botao-principal botao-comprar-lista"
+                        data-id="${listaSalva.id}"
+                    >
+                        Comprar
+                    </button>
+
+
+                    <button
+                        class="botao botao-secundario botao-visualizar-lista"
                         data-id="${listaSalva.id}"
                     >
                         Visualizar
                     </button>
+
 
                     <button
                         class="botao botao-sucesso botao-usar-lista"
                         data-id="${listaSalva.id}"
                     >
                         Usar novamente
+                    </button>
+
+
+                    <button
+                        class="botao botao-excluir botao-excluir-lista"
+                        data-id="${listaSalva.id}"
+                    >
+                        Excluir lista
                     </button>
 
                 </div>
@@ -950,57 +1077,186 @@ function renderizarListasSalvas() {
 
 function configurarBotoesListasSalvas() {
 
+
+    // -------------------------------------------------
+    // COMPRAR
+    // -------------------------------------------------
+
+    document
+        .querySelectorAll(
+            ".botao-comprar-lista"
+        )
+        .forEach(
+            (botao) => {
+
+                botao.addEventListener(
+                    "click",
+                    () => {
+
+                        abrirListaParaCompra(
+                            botao.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    // -------------------------------------------------
+    // VISUALIZAR
+    // -------------------------------------------------
+
     document
         .querySelectorAll(
             ".botao-visualizar-lista"
         )
-        .forEach((botao) => {
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    visualizarLista(
-                        botao.dataset.id
-                    );
+                        visualizarLista(
+                            botao.dataset.id
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
+
+    // -------------------------------------------------
+    // USAR NOVAMENTE
+    // -------------------------------------------------
 
     document
         .querySelectorAll(
             ".botao-usar-lista"
         )
-        .forEach((botao) => {
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    usarListaNovamente(
-                        botao.dataset.id
-                    );
+                        usarListaNovamente(
+                            botao.dataset.id
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
+
+
+    // -------------------------------------------------
+    // EXCLUIR
+    // -------------------------------------------------
+
+    document
+        .querySelectorAll(
+            ".botao-excluir-lista"
+        )
+        .forEach(
+            (botao) => {
+
+                botao.addEventListener(
+                    "click",
+                    () => {
+
+                        excluirLista(
+                            botao.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
 
 // =====================================================
-// ENCONTRAR LISTA SALVA
+// ENCONTRAR LISTA
 // =====================================================
 
 function encontrarLista(id) {
 
     return listasSalvasDados.find(
         (lista) =>
-            String(lista.id) === String(id)
+            String(lista.id) ===
+            String(id)
+    );
+
+}
+
+
+// =====================================================
+// EXCLUIR LISTA
+// =====================================================
+
+function excluirLista(id) {
+
+    const lista =
+        encontrarLista(id);
+
+
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            `ATENÇÃO!\n\n` +
+            `Deseja realmente excluir a lista ` +
+            `"${lista.nome}"?\n\n` +
+            `Essa ação não poderá ser desfeita.`
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    listasSalvasDados =
+        listasSalvasDados.filter(
+            (listaItem) =>
+                String(listaItem.id) !==
+                String(id)
+        );
+
+
+    salvarListas();
+
+
+    if (
+        String(idListaAtual) ===
+        String(id)
+    ) {
+
+        idListaAtual = null;
+
+    }
+
+
+    renderizarListasSalvas();
+
+    mostrarTela(
+        telaMinhasListas
     );
 
 }
@@ -1031,12 +1287,25 @@ function visualizarLista(id) {
         lista.nome;
 
 
+    const quantidadeItens =
+        lista.itens.length;
+
+
+    const comprados =
+        lista.itens.filter(
+            (item) =>
+                item.comprado
+        ).length;
+
+
     informacoesListaVisualizacao.textContent =
-        `${lista.data} • ${lista.itens.length} ${
-            lista.itens.length === 1
+        `${lista.data} • ` +
+        `${quantidadeItens} ${
+            quantidadeItens === 1
                 ? "item"
                 : "itens"
-        }`;
+        } • ` +
+        `${comprados} comprados`;
 
 
     itensListaVisualizacao.innerHTML = "";
@@ -1055,6 +1324,11 @@ function visualizarLista(id) {
                 "item-visualizacao";
 
 
+            const subtotal =
+                item.valorUnitarioCentavos *
+                item.quantidade;
+
+
             elemento.innerHTML = `
 
                 <div class="item-visualizacao-topo">
@@ -1066,6 +1340,35 @@ function visualizarLista(id) {
                     <span class="item-visualizacao-quantidade">
                         Qtd.: ${item.quantidade}
                     </span>
+
+                </div>
+
+
+                <div class="lista-salva-info">
+
+                    Valor unitário:
+                    <strong>
+                        ${centavosParaMoeda(
+                            item.valorUnitarioCentavos
+                        )}
+                    </strong>
+
+                    <br>
+
+                    Subtotal:
+                    <strong>
+                        ${centavosParaMoeda(
+                            subtotal
+                        )}
+                    </strong>
+
+                    <br>
+
+                    ${
+                        item.comprado
+                            ? "✓ Comprado"
+                            : "○ Não comprado"
+                    }
 
                 </div>
 
@@ -1104,47 +1407,32 @@ function usarListaNovamente(id) {
     }
 
 
-    const novaLista = {
-
-        id: gerarId(),
-
-        nome: listaOriginal.nome,
-
-        data: obterDataAtual(),
-
-        itens:
-            listaOriginal.itens.map(
-                (item) => ({
-
-                    id: gerarId(),
-
-                    nome: item.nome,
-
-                    quantidade: item.quantidade,
-
-                    valorUnitarioCentavos: 0,
-
-                    comprado: false
-
-                })
-            )
-
-    };
-
-
     listaAtual =
-        novaLista.itens;
+        listaOriginal.itens.map(
+            (item) => ({
+
+                id: gerarId(),
+
+                nome: item.nome,
+
+                quantidade: item.quantidade,
+
+                valorUnitarioCentavos: 0,
+
+                comprado: false
+
+            })
+        );
 
 
     nomeLista.value =
-        novaLista.nome;
+        listaOriginal.nome;
 
 
-    idListaAtual =
-        novaLista.id;
+    idListaAtual = null;
 
 
-    salvarListaAtualTemporaria();
+    salvarRascunho();
 
     renderizarItensLista();
 
@@ -1156,7 +1444,40 @@ function usarListaNovamente(id) {
 
 
 // =====================================================
-// RENDERIZAR TELA DE COMPRA
+// ABRIR LISTA PARA COMPRA
+// =====================================================
+
+function abrirListaParaCompra(id) {
+
+    const lista =
+        encontrarLista(id);
+
+
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    idListaAtual =
+        lista.id;
+
+
+    renderizarTelaCompra(
+        lista
+    );
+
+
+    mostrarTela(
+        telaComprar
+    );
+
+}
+
+
+// =====================================================
+// RENDERIZAR COMPRA
 // =====================================================
 
 function renderizarTelaCompra(lista) {
@@ -1165,12 +1486,17 @@ function renderizarTelaCompra(lista) {
         lista.nome;
 
 
+    const comprados =
+        lista.itens.filter(
+            (item) =>
+                item.comprado
+        ).length;
+
+
     informacoesListaCompra.textContent =
-        `${lista.data} • ${lista.itens.length} ${
-            lista.itens.length === 1
-                ? "item"
-                : "itens"
-        }`;
+        `${lista.data} • ` +
+        `${lista.itens.length} itens • ` +
+        `${comprados} comprados`;
 
 
     listaCompra.innerHTML = "";
@@ -1301,9 +1627,11 @@ function renderizarTelaCompra(lista) {
 
 function centavosParaMoeda(centavos) {
 
-    return (
-        centavos / 100
-    ).toLocaleString(
+    const valor =
+        Number(centavos) / 100;
+
+
+    return valor.toLocaleString(
         "pt-BR",
         {
             style: "currency",
@@ -1315,117 +1643,134 @@ function centavosParaMoeda(centavos) {
 
 
 // =====================================================
-// MÁSCARA MONETÁRIA
+// CAMPO DE VALOR
 // =====================================================
 //
-// 1    → R$ 0,01
-// 12   → R$ 0,12
-// 125  → R$ 1,25
-// 1250 → R$ 12,50
+// Digitação:
 //
-// O valor armazenado é inteiro em centavos.
+// 1      → R$ 0,01
+// 12     → R$ 0,12
+// 125    → R$ 1,25
+// 1250   → R$ 12,50
+//
+// O banco interno sempre guarda:
+// 1250
+//
+// e não:
+// 12,50
+//
 // =====================================================
 
 function configurarCamposCompra() {
+
+
+    // -------------------------------------------------
+    // VALORES
+    // -------------------------------------------------
 
     document
         .querySelectorAll(
             ".campo-valor-compra"
         )
-        .forEach((campo) => {
+        .forEach(
+            (campo) => {
 
-            campo.addEventListener(
-                "input",
-                () => {
+                campo.addEventListener(
+                    "input",
+                    () => {
 
-                    const lista =
-                        encontrarLista(
-                            idListaAtual
-                        );
-
-
-                    if (!lista) {
-
-                        return;
-
-                    }
+                        const lista =
+                            encontrarLista(
+                                idListaAtual
+                            );
 
 
-                    const id =
-                        campo.dataset.id;
+                        if (!lista) {
+
+                            return;
+
+                        }
 
 
-                    const item =
-                        lista.itens.find(
-                            (item) =>
-                                String(item.id) ===
-                                String(id)
-                        );
+                        const item =
+                            lista.itens.find(
+                                (item) =>
+                                    String(item.id) ===
+                                    String(
+                                        campo.dataset.id
+                                    )
+                            );
 
 
-                    if (!item) {
+                        if (!item) {
 
-                        return;
+                            return;
 
-                    }
-
-
-                    let numeros =
-                        campo.value.replace(
-                            /\D/g,
-                            ""
-                        );
+                        }
 
 
-                    if (
-                        numeros === ""
-                    ) {
-
-                        item.valorUnitarioCentavos =
-                            0;
-
-                        campo.value = "";
-
-                    } else {
-
-                        numeros =
-                            numeros.replace(
-                                /^0+(?=\d)/,
+                        let numeros =
+                            campo.value.replace(
+                                /\D/g,
                                 ""
                             );
 
 
-                        const centavos =
-                            Number(numeros);
+                        if (!numeros) {
+
+                            item.valorUnitarioCentavos =
+                                0;
+
+                            campo.value = "";
+
+                        } else {
+
+                            numeros =
+                                numeros.replace(
+                                    /^0+(?=\d)/,
+                                    ""
+                                );
 
 
-                        item.valorUnitarioCentavos =
-                            centavos;
+                            const centavos =
+                                Number(numeros);
 
 
-                        campo.value =
-                            centavosParaMoeda(
-                                centavos
+                            item.valorUnitarioCentavos =
+                                centavos;
+
+
+                            campo.value =
+                                centavosParaMoeda(
+                                    centavos
+                                );
+
+
+                            campo.setSelectionRange(
+                                campo.value.length,
+                                campo.value.length
                             );
 
+                        }
+
+
+                        salvarListas();
+
+
+                        atualizarSubtotal(
+                            item
+                        );
+
+
+                        atualizarTotalCompra(
+                            lista
+                        );
+
                     }
+                );
 
-
-                    salvarListas();
-
-                    atualizarSubtotal(
-                        lista,
-                        item
-                    );
-
-                    atualizarTotalCompra(
-                        lista
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
 
     // -------------------------------------------------
@@ -1436,78 +1781,85 @@ function configurarCamposCompra() {
         .querySelectorAll(
             ".botao-comprado"
         )
-        .forEach((botao) => {
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    const lista =
-                        encontrarLista(
-                            idListaAtual
+                        const lista =
+                            encontrarLista(
+                                idListaAtual
+                            );
+
+
+                        if (!lista) {
+
+                            return;
+
+                        }
+
+
+                        const item =
+                            lista.itens.find(
+                                (item) =>
+                                    String(item.id) ===
+                                    String(
+                                        botao.dataset.id
+                                    )
+                            );
+
+
+                        if (!item) {
+
+                            return;
+
+                        }
+
+
+                        item.comprado =
+                            !item.comprado;
+
+
+                        salvarListas();
+
+
+                        renderizarTelaCompra(
+                            lista
                         );
 
-
-                    if (!lista) {
-
-                        return;
-
                     }
+                );
 
-
-                    const item =
-                        lista.itens.find(
-                            (item) =>
-                                String(item.id) ===
-                                String(botao.dataset.id)
-                        );
-
-
-                    if (!item) {
-
-                        return;
-
-                    }
-
-
-                    item.comprado =
-                        !item.comprado;
-
-
-                    salvarListas();
-
-                    renderizarTelaCompra(
-                        lista
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
 
     // -------------------------------------------------
-    // EDITAR ITEM COMPRADO
+    // EDITAR ITEM
     // -------------------------------------------------
 
     document
         .querySelectorAll(
             ".botao-editar-compra"
         )
-        .forEach((botao) => {
+        .forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    editarItemDuranteCompra(
-                        botao.dataset.id
-                    );
+                        editarItemDuranteCompra(
+                            botao.dataset.id
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
 }
 
@@ -1617,6 +1969,7 @@ function editarItemDuranteCompra(id) {
 
     salvarListas();
 
+
     renderizarTelaCompra(
         lista
     );
@@ -1628,10 +1981,7 @@ function editarItemDuranteCompra(id) {
 // ATUALIZAR SUBTOTAL
 // =====================================================
 
-function atualizarSubtotal(
-    lista,
-    item
-) {
+function atualizarSubtotal(item) {
 
     const elementos =
         document.querySelectorAll(
@@ -1648,11 +1998,18 @@ function atualizarSubtotal(
                 );
 
 
+            if (!botao) {
+
+                return;
+
+            }
+
+
             if (
-                !botao ||
                 String(
                     botao.dataset.id
-                ) !== String(item.id)
+                ) !==
+                String(item.id)
             ) {
 
                 return;
@@ -1683,7 +2040,7 @@ function atualizarSubtotal(
 
 
 // =====================================================
-// ATUALIZAR TOTAL
+// TOTAL
 // =====================================================
 
 function atualizarTotalCompra(lista) {
@@ -1695,8 +2052,12 @@ function atualizarTotalCompra(lista) {
         (item) => {
 
             totalCentavos +=
-                item.valorUnitarioCentavos *
-                item.quantidade;
+                Number(
+                    item.valorUnitarioCentavos
+                ) *
+                Number(
+                    item.quantidade
+                );
 
         }
     );
@@ -1731,22 +2092,18 @@ function finalizarCompra() {
 
     salvarListas();
 
-    alert(
-        "Compra finalizada."
-    );
 
+    renderizarListasSalvas();
 
     mostrarTela(
         telaMinhasListas
     );
 
-    renderizarListasSalvas();
-
 }
 
 
 // =====================================================
-// BOTÃO CRIAR LISTA
+// BOTÃO CRIAR
 // =====================================================
 
 botaoCriarLista.addEventListener(
@@ -1756,7 +2113,7 @@ botaoCriarLista.addEventListener(
 
 
 // =====================================================
-// BOTÃO MINHAS LISTAS
+// MINHAS LISTAS
 // =====================================================
 
 botaoMinhasListas.addEventListener(
@@ -1774,7 +2131,7 @@ botaoMinhasListas.addEventListener(
 
 
 // =====================================================
-// BOTÃO ADICIONAR ITEM
+// ADICIONAR ITEM
 // =====================================================
 
 botaoAdicionarItem.addEventListener(
@@ -1784,7 +2141,7 @@ botaoAdicionarItem.addEventListener(
 
 
 // =====================================================
-// ENTER - NOME DO ITEM
+// ENTER - NOME
 // =====================================================
 
 nomeItem.addEventListener(
@@ -1829,7 +2186,7 @@ quantidadeItem.addEventListener(
 
 nomeLista.addEventListener(
     "input",
-    salvarListaAtualTemporaria
+    salvarRascunho
 );
 
 
@@ -1839,12 +2196,12 @@ nomeLista.addEventListener(
 
 botaoFinalizarLista.addEventListener(
     "click",
-    finalizarLista
+    salvarListaPreparada
 );
 
 
 // =====================================================
-// CANCELAR CRIAÇÃO
+// CANCELAR
 // =====================================================
 
 botaoCancelarLista.addEventListener(
@@ -1853,7 +2210,7 @@ botaoCancelarLista.addEventListener(
 
         const confirmar =
             confirm(
-                "Cancelar esta lista?"
+                "Deseja cancelar esta lista?"
             );
 
 
@@ -1872,9 +2229,11 @@ botaoCancelarLista.addEventListener(
 
         quantidadeItem.value = "";
 
+
         localStorage.removeItem(
-            "listaAtualComprasV11"
+            CHAVE_RASCUNHO
         );
+
 
         mostrarTela(
             telaPrincipal
@@ -1885,7 +2244,7 @@ botaoCancelarLista.addEventListener(
 
 
 // =====================================================
-// VOLTAR DO MENU DE LISTAS
+// VOLTAR - MINHAS LISTAS
 // =====================================================
 
 botaoVoltarPrincipalListas.addEventListener(
@@ -1894,6 +2253,75 @@ botaoVoltarPrincipalListas.addEventListener(
 
         mostrarTela(
             telaPrincipal
+        );
+
+    }
+);
+
+
+// =====================================================
+// COMPRAR A PARTIR DA VISUALIZAÇÃO
+// =====================================================
+
+botaoComprarVisualizacao.addEventListener(
+    "click",
+    () => {
+
+        if (!idListaAtual) {
+
+            return;
+
+        }
+
+
+        abrirListaParaCompra(
+            idListaAtual
+        );
+
+    }
+);
+
+
+// =====================================================
+// USAR NOVAMENTE
+// =====================================================
+
+botaoUsarListaVisualizacao.addEventListener(
+    "click",
+    () => {
+
+        if (!idListaAtual) {
+
+            return;
+
+        }
+
+
+        usarListaNovamente(
+            idListaAtual
+        );
+
+    }
+);
+
+
+// =====================================================
+// EXCLUIR A PARTIR DA VISUALIZAÇÃO
+// =====================================================
+
+botaoExcluirVisualizacao.addEventListener(
+    "click",
+    () => {
+
+        if (!idListaAtual) {
+
+            return;
+
+        }
+
+
+        excluirLista(
+            idListaAtual
         );
 
     }
@@ -1919,29 +2347,6 @@ botaoVoltarMinhasListas.addEventListener(
 
 
 // =====================================================
-// USAR LISTA NOVAMENTE
-// =====================================================
-
-botaoUsarListaVisualizacao.addEventListener(
-    "click",
-    () => {
-
-        if (!idListaAtual) {
-
-            return;
-
-        }
-
-
-        usarListaNovamente(
-            idListaAtual
-        );
-
-    }
-);
-
-
-// =====================================================
 // FINALIZAR COMPRA
 // =====================================================
 
@@ -1952,42 +2357,17 @@ botaoFinalizarCompra.addEventListener(
 
 
 // =====================================================
-// VOLTAR PARA A LISTA
+// VOLTAR DA COMPRA
 // =====================================================
 
 botaoVoltarLista.addEventListener(
     "click",
     () => {
 
-        const lista =
-            encontrarLista(
-                idListaAtual
-            );
-
-
-        if (!lista) {
-
-            mostrarTela(
-                telaMinhasListas
-            );
-
-            return;
-
-        }
-
-
-        listaAtual =
-            lista.itens;
-
-
-        nomeLista.value =
-            lista.nome;
-
-
-        renderizarItensLista();
+        renderizarListasSalvas();
 
         mostrarTela(
-            telaCriarLista
+            telaMinhasListas
         );
 
     }
@@ -1995,11 +2375,11 @@ botaoVoltarLista.addEventListener(
 
 
 // =====================================================
-// RECUPERAR RASCUNHO AO INICIAR
+// RECUPERAR RASCUNHO
 // =====================================================
 
 if (
-    carregarListaTemporaria()
+    carregarRascunho()
 ) {
 
     renderizarItensLista();
@@ -2011,7 +2391,9 @@ if (
 // SERVICE WORKER
 // =====================================================
 
-if ("serviceWorker" in navigator) {
+if (
+    "serviceWorker" in navigator
+) {
 
     window.addEventListener(
         "load",
@@ -2019,21 +2401,25 @@ if ("serviceWorker" in navigator) {
 
             navigator.serviceWorker
                 .register("sw.js")
-                .then(() => {
+                .then(
+                    () => {
 
-                    console.log(
-                        "Service Worker registrado."
-                    );
+                        console.log(
+                            "Service Worker registrado."
+                        );
 
-                })
-                .catch((erro) => {
+                    }
+                )
+                .catch(
+                    (erro) => {
 
-                    console.error(
-                        "Erro no Service Worker:",
-                        erro
-                    );
+                        console.error(
+                            "Erro no Service Worker:",
+                            erro
+                        );
 
-                });
+                    }
+                );
 
         }
     );
