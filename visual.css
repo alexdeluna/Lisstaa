@@ -509,3 +509,14 @@ main {
     }
 
 }
+
+.lista-salva-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.lista-salva-acoes .botao {
+    margin-top: 0;
+}
