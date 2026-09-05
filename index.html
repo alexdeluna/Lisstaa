@@ -15,20 +15,13 @@
         content="#2875e8"
     >
 
-    <meta
-        name="description"
-        content="Lista de compras simples"
-    >
-
     <title>Lista de Compras</title>
 
-    <!-- CSS -->
     <link
         rel="stylesheet"
         href="visual.css"
     >
 
-    <!-- PWA -->
     <link
         rel="manifest"
         href="manifest.json"
@@ -46,10 +39,12 @@
 
     <header>
 
-        <h1>Lista de Compras</h1>
+        <h1>
+            Lista de Compras
+        </h1>
 
         <p>
-            Controle suas compras e valores
+            V1.1
         </p>
 
     </header>
@@ -59,1006 +54,203 @@
 
 
         <!-- ================================================= -->
-        <!-- RESUMO -->
+        <!-- TELA PRINCIPAL -->
         <!-- ================================================= -->
 
-        <section class="resumo">
+        <section
+            id="telaPrincipal"
+            class="tela"
+        >
 
+            <div class="cartao">
 
-            <div class="resumo-item">
+                <h2>
+                    Menu Principal
+                </h2>
 
-                <strong id="totalItens">
-                    14
-                </strong>
+                <p>
+                    Crie uma nova lista de compras.
+                </p>
 
-                <span>
-                    Itens
-                </span>
-
-            </div>
-
-
-            <div class="resumo-item">
-
-                <strong id="itensComprados">
-                    0
-                </strong>
-
-                <span>
-                    Comprados
-                </span>
+                <button
+                    id="botaoCriarLista"
+                    class="botao botao-principal"
+                >
+                    Criar nova lista
+                </button>
 
             </div>
-
-
-            <div class="resumo-item">
-
-                <strong id="itensFaltantes">
-                    14
-                </strong>
-
-                <span>
-                    Faltantes
-                </span>
-
-            </div>
-
 
         </section>
 
 
         <!-- ================================================= -->
-        <!-- LISTA DE PRODUTOS -->
+        <!-- TELA CRIAR LISTA -->
         <!-- ================================================= -->
 
-        <section id="listaProdutos">
+        <section
+            id="telaCriarLista"
+            class="tela escondido"
+        >
+
+            <div class="cartao">
+
+                <h2>
+                    Criar Lista
+                </h2>
+
+
+                <!-- FORMULÁRIO -->
+
+                <div class="campo">
+
+                    <label for="nomeItem">
+                        Nome do item
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeItem"
+                        placeholder="Ex.: Arroz"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="quantidadeItem">
+                        Quantidade
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantidadeItem"
+                        min="1"
+                        step="1"
+                        placeholder="Ex.: 2"
+                        inputmode="numeric"
+                    >
+
+                </div>
+
+
+                <button
+                    id="botaoAdicionarItem"
+                    class="botao botao-principal"
+                >
+                    Adicionar item
+                </button>
+
+            </div>
 
 
             <!-- ================================================= -->
-            <!-- 01 - FEIJÃO -->
+            <!-- ITENS DA LISTA -->
             <!-- ================================================= -->
 
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
+            <div class="cartao">
 
-                <div class="produto-topo">
+                <div class="titulo-lista">
 
                     <h2>
-                        Feijão
+                        Minha Lista
                     </h2>
 
-                    <span>
-                        Qtd.: 1
+                    <span id="contadorItens">
+                        0 itens
                     </span>
 
                 </div>
 
 
-                <div class="produto-conteudo">
+                <div id="listaItens">
 
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
+                    <p class="lista-vazia">
+                        Nenhum item adicionado.
+                    </p>
 
                 </div>
 
 
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 02 - ARROZ -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Arroz
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 03 - MACARRÃO -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="2"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Macarrão
-                    </h2>
-
-                    <span>
-                        Qtd.: 2
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 04 - LEITE -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="2"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Leite
-                    </h2>
-
-                    <span>
-                        Qtd.: 2
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 05 - FUBÁ -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="2"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Fubá
-                    </h2>
-
-                    <span>
-                        Qtd.: 2
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 06 - BOLACHA SAL -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Bolacha Sal
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 07 - ÓLEO -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Óleo
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 08 - NESCAU -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Nescau
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 09 - DETERGENTE -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Detergente
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 10 - PAPEL HIGIÊNICO -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="2"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Papel higiênico
-                    </h2>
-
-                    <span>
-                        Qtd.: 2
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 11 - SABÃO -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Sabão
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 12 - PASTA DENTAL -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Pasta dental
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 13 - ÁGUA SANITÁRIA -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="2"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Água sanitária
-                    </h2>
-
-                    <span>
-                        Qtd.: 2
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
-
-
-            <!-- ================================================= -->
-            <!-- 14 - MANTEIGA -->
-            <!-- ================================================= -->
-
-            <article
-                class="produto"
-                data-quantidade="1"
-            >
-
-                <div class="produto-topo">
-
-                    <h2>
-                        Manteiga
-                    </h2>
-
-                    <span>
-                        Qtd.: 1
-                    </span>
-
-                </div>
-
-
-                <div class="produto-conteudo">
-
-                    <div class="campo">
-
-                        <label>
-                            Valor unitário
-                        </label>
-
-                        <input
-                            type="text"
-                            class="valor-unitario"
-                            inputmode="numeric"
-                            placeholder="R$ 0,00"
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button class="botao-comprado">
-
-                        Marcar como comprado
-
-                    </button>
-
-                </div>
-
-
-                <div class="subtotal">
-
-                    Subtotal:
-
-                    <strong>
-                        R$ 0,00
-                    </strong>
-
-                </div>
-
-            </article>
-
+                <button
+                    id="botaoFinalizarLista"
+                    class="botao botao-sucesso"
+                >
+                    Finalizar lista
+                </button>
+
+
+                <button
+                    id="botaoVoltarPrincipal"
+                    class="botao botao-secundario"
+                >
+                    Menu principal
+                </button>
+
+            </div>
 
         </section>
 
 
         <!-- ================================================= -->
-        <!-- TOTAL DA COMPRA -->
+        <!-- TELA COMPRAR ITENS -->
         <!-- ================================================= -->
 
-        <section class="rodape">
+        <section
+            id="telaComprar"
+            class="tela escondido"
+        >
+
+            <div class="cartao">
+
+                <h2>
+                    Comprar Itens
+                </h2>
+
+                <p>
+                    Informe o valor de cada item e marque
+                    quando ele for comprado.
+                </p>
+
+            </div>
 
 
-            <div class="total">
+            <div id="listaCompra">
 
-                <span>
-                    Total da compra
-                </span>
-
-                <strong id="totalCompra">
-                    R$ 0,00
-                </strong>
+                <!-- Os itens serão inseridos pelo app.js -->
 
             </div>
 
 
-            <div class="acoes">
+            <!-- ================================================= -->
+            <!-- TOTAL -->
+            <!-- ================================================= -->
+
+            <div class="cartao">
+
+                <div class="total">
+
+                    <span>
+                        Total da compra
+                    </span>
+
+                    <strong id="totalCompra">
+                        R$ 0,00
+                    </strong>
+
+                </div>
 
 
                 <button
-                    id="marcarTodos"
-                    class="botao-marcar"
+                    id="botaoVoltarLista"
+                    class="botao botao-secundario"
                 >
-
-                    Marcar todos
-
+                    Voltar para lista
                 </button>
-
-
-                <button
-                    id="limparDados"
-                    class="botao-limpar"
-                >
-
-                    Limpar valores
-
-                </button>
-
 
             </div>
-
 
         </section>
 
@@ -1066,7 +258,9 @@
     </main>
 
 
+    <!-- ================================================= -->
     <!-- JAVASCRIPT -->
+    <!-- ================================================= -->
 
     <script src="app.js"></script>
 
