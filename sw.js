@@ -1,3 +1,7 @@
+// =====================================================
+// SERVICE WORKER - LISTA DE COMPRAS V1.1
+// =====================================================
+
 const CACHE_NAME = "lista-compras-v1.1";
 
 const ARQUIVOS = [
@@ -8,6 +12,10 @@ const ARQUIVOS = [
     "./manifest.json"
 ];
 
+
+// =====================================================
+// INSTALAÇÃO
+// =====================================================
 
 self.addEventListener("install", (evento) => {
 
@@ -27,24 +35,26 @@ self.addEventListener("install", (evento) => {
 });
 
 
+// =====================================================
+// ATIVAÇÃO
+// =====================================================
+
 self.addEventListener("activate", (evento) => {
 
     evento.waitUntil(
 
         caches.keys()
-            .then((chaves) => {
+            .then((nomesCaches) => {
 
                 return Promise.all(
 
-                    chaves
-                        .filter(
-                            (chave) =>
-                                chave !== CACHE_NAME
-                        )
-                        .map(
-                            (chave) =>
-                                caches.delete(chave)
-                        )
+                    nomesCaches
+                        .filter((nome) => {
+                            return nome !== CACHE_NAME;
+                        })
+                        .map((nome) => {
+                            return caches.delete(nome);
+                        })
 
                 );
 
@@ -57,20 +67,36 @@ self.addEventListener("activate", (evento) => {
 });
 
 
+// =====================================================
+// BUSCAR ARQUIVOS
+// =====================================================
+
 self.addEventListener("fetch", (evento) => {
 
     evento.respondWith(
 
         caches.match(evento.request)
-            .then((resposta) => {
+            .then((respostaCache) => {
 
-                if (resposta) {
+                if (respostaCache) {
 
-                    return resposta;
+                    return respostaCache;
 
                 }
 
-                return fetch(evento.request);
+                return fetch(evento.request)
+                    .then((respostaRede) => {
+
+                        return respostaRede;
+
+                    })
+                    .catch(() => {
+
+                        return caches.match(
+                            "./index.html"
+                        );
+
+                    });
 
             })
 
