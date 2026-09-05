@@ -4,6 +4,7 @@
 
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
     background: #f3f5f7;
     color: #222;
@@ -13,7 +14,7 @@ header {
     background: #2875e8;
     color: white;
     text-align: center;
-    padding: 30px 15px;
+    padding: 28px 15px;
 }
 
 header h1 {
@@ -23,97 +24,248 @@ header h1 {
 
 header p {
     margin: 8px 0 0;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 main {
     width: 100%;
     max-width: 720px;
-    margin: auto;
+    margin: 0 auto;
     padding: 20px 14px 40px;
 }
 
-/* RESUMO */
+.tela {
+    width: 100%;
+}
 
-.resumo {
+.escondido {
+    display: none;
+}
+
+.cartao {
     background: white;
     border-radius: 16px;
     padding: 20px;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.resumo-item {
-    text-align: center;
+.cartao h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 22px;
 }
 
-.resumo-item strong {
-    display: block;
-    font-size: 30px;
-}
-
-.resumo-item span {
-    display: block;
-    margin-top: 5px;
+.cartao p {
     color: #666;
-    font-size: 15px;
+    line-height: 1.5;
 }
 
-/* PRODUTO */
+/* CAMPOS */
 
-.produto {
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.campo input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 17px;
     background: white;
-    border-radius: 16px;
-    padding: 17px;
-    margin-bottom: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+    color: #222;
 }
 
-.produto.comprado {
-    background: #e8f6ec;
-    opacity: .75;
+.campo input:focus {
+    outline: none;
+    border-color: #2875e8;
 }
 
-.produto-topo {
+/* BOTÕES */
+
+.botao {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-principal {
+    background: #2875e8;
+    color: white;
+}
+
+.botao-principal:active {
+    background: #1d5fc5;
+}
+
+.botao-sucesso {
+    background: #28a745;
+    color: white;
+}
+
+.botao-secundario {
+    background: #6c757d;
+    color: white;
+}
+
+/* TÍTULO DA LISTA */
+
+.titulo-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.titulo-lista h2 {
+    margin: 0;
+}
+
+#contadorItens {
+    background: #eaf1ff;
+    color: #2875e8;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* LISTA */
+
+.lista-vazia {
+    text-align: center;
+    padding: 20px 0;
+    color: #777;
+}
+
+/* ITEM CADASTRADO */
+
+.item-lista {
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    background: #fafafa;
+}
+
+.item-lista-topo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
 }
 
-.produto-topo h2 {
-    margin: 0;
-    font-size: 20px;
+.item-lista-nome {
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.produto-topo span {
+.item-lista-quantidade {
     background: #eaf1ff;
     color: #2875e8;
-    padding: 7px 12px;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.item-lista-acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.item-lista-acoes button {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-editar {
+    background: #ffc107;
+    color: #222;
+}
+
+.botao-excluir {
+    background: #dc3545;
+    color: white;
+}
+
+/* COMPRA */
+
+#listaCompra {
+    width: 100%;
+}
+
+.item-compra {
+    background: white;
+    border-radius: 16px;
+    padding: 17px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.item-compra.comprado {
+    background: #e8f6ec;
+    opacity: 0.75;
+}
+
+.item-compra-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-compra-nome {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.item-compra-quantidade {
+    background: #eaf1ff;
+    color: #2875e8;
+    padding: 7px 11px;
     border-radius: 20px;
     font-weight: bold;
     white-space: nowrap;
 }
 
-/* CAMPOS */
-
-.produto-conteudo {
+.item-compra-conteudo {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 15px;
 }
 
-.campo label {
+.item-compra-conteudo label {
     display: block;
     margin-bottom: 5px;
     color: #666;
     font-size: 13px;
+    font-weight: bold;
 }
 
-.valor-unitario {
+.item-compra-conteudo input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -130,14 +282,11 @@ main {
     color: white;
     font-size: 15px;
     font-weight: bold;
-    cursor: pointer;
 }
 
-.produto.comprado .botao-comprado {
+.item-compra.comprado .botao-comprado {
     background: #6c757d;
 }
-
-/* SUBTOTAL */
 
 .subtotal {
     margin-top: 12px;
@@ -145,24 +294,17 @@ main {
 }
 
 .subtotal strong {
-    font-size: 17px;
     color: #222;
+    font-size: 17px;
 }
 
-/* RODAPÉ */
-
-.rodape {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
-}
+/* TOTAL */
 
 .total {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     font-size: 19px;
 }
 
@@ -171,41 +313,15 @@ main {
     font-size: 28px;
 }
 
-.acoes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.acoes button {
-    border: 0;
-    border-radius: 9px;
-    padding: 13px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.botao-marcar {
-    background: #343a40;
-    color: white;
-}
-
-.botao-limpar {
-    background: #dc3545;
-    color: white;
-}
-
 /* CELULAR */
 
 @media (max-width: 500px) {
 
-    .produto-conteudo {
+    .item-compra-conteudo {
         grid-template-columns: 1fr;
     }
 
-    .produto-topo h2 {
+    .item-compra-nome {
         font-size: 18px;
     }
 
@@ -216,4 +332,5 @@ main {
     .total strong {
         font-size: 25px;
     }
+
 }
