@@ -1,12 +1,10 @@
 {
     "name": "Lista de Compras",
     "short_name": "Compras",
-    "description": "Aplicativo simples para criar e controlar listas de compras.",
+    "description": "Aplicativo simples para criar e gerenciar listas de compras.",
     "start_url": "./",
     "display": "standalone",
     "background_color": "#f3f5f7",
     "theme_color": "#2875e8",
-    "orientation": "portrait",
-    "lang": "pt-BR",
-    "icons": []
+    "lang": "pt-BR"
 }
