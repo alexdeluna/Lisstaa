@@ -4,25 +4,42 @@
 
 
 // =====================================================
-// ELEMENTOS DAS TELAS
+// TELAS
 // =====================================================
 
-const telaPrincipal = document.getElementById("telaPrincipal");
-const telaCriarLista = document.getElementById("telaCriarLista");
-const telaComprar = document.getElementById("telaComprar");
+const telaPrincipal =
+    document.getElementById("telaPrincipal");
+
+const telaCriarLista =
+    document.getElementById("telaCriarLista");
+
+const telaMinhasListas =
+    document.getElementById("telaMinhasListas");
+
+const telaVisualizarLista =
+    document.getElementById("telaVisualizarLista");
+
+const telaComprar =
+    document.getElementById("telaComprar");
 
 
 // =====================================================
-// ELEMENTOS DA TELA PRINCIPAL
+// ELEMENTOS - MENU PRINCIPAL
 // =====================================================
 
 const botaoCriarLista =
     document.getElementById("botaoCriarLista");
 
+const botaoMinhasListas =
+    document.getElementById("botaoMinhasListas");
+
 
 // =====================================================
-// ELEMENTOS DA TELA CRIAR LISTA
+// ELEMENTOS - CRIAR LISTA
 // =====================================================
+
+const nomeLista =
+    document.getElementById("nomeLista");
 
 const nomeItem =
     document.getElementById("nomeItem");
@@ -42,13 +59,66 @@ const contadorItens =
 const botaoFinalizarLista =
     document.getElementById("botaoFinalizarLista");
 
-const botaoVoltarPrincipal =
-    document.getElementById("botaoVoltarPrincipal");
+const botaoCancelarLista =
+    document.getElementById("botaoCancelarLista");
 
 
 // =====================================================
-// ELEMENTOS DA TELA DE COMPRA
+// ELEMENTOS - MINHAS LISTAS
 // =====================================================
+
+const listasSalvas =
+    document.getElementById("listasSalvas");
+
+const botaoVoltarPrincipalListas =
+    document.getElementById(
+        "botaoVoltarPrincipalListas"
+    );
+
+
+// =====================================================
+// ELEMENTOS - VISUALIZAR LISTA
+// =====================================================
+
+const tituloListaVisualizacao =
+    document.getElementById(
+        "tituloListaVisualizacao"
+    );
+
+const informacoesListaVisualizacao =
+    document.getElementById(
+        "informacoesListaVisualizacao"
+    );
+
+const itensListaVisualizacao =
+    document.getElementById(
+        "itensListaVisualizacao"
+    );
+
+const botaoUsarListaVisualizacao =
+    document.getElementById(
+        "botaoUsarListaVisualizacao"
+    );
+
+const botaoVoltarMinhasListas =
+    document.getElementById(
+        "botaoVoltarMinhasListas"
+    );
+
+
+// =====================================================
+// ELEMENTOS - COMPRAS
+// =====================================================
+
+const tituloListaCompra =
+    document.getElementById(
+        "tituloListaCompra"
+    );
+
+const informacoesListaCompra =
+    document.getElementById(
+        "informacoesListaCompra"
+    );
 
 const listaCompra =
     document.getElementById("listaCompra");
@@ -56,56 +126,109 @@ const listaCompra =
 const totalCompra =
     document.getElementById("totalCompra");
 
+const botaoFinalizarCompra =
+    document.getElementById(
+        "botaoFinalizarCompra"
+    );
+
 const botaoVoltarLista =
-    document.getElementById("botaoVoltarLista");
+    document.getElementById(
+        "botaoVoltarLista"
+    );
 
 
 // =====================================================
-// DADOS DA APLICAÇÃO
+// DADOS
 // =====================================================
 
-let lista = [];
+let listaAtual = [];
+
+let listasSalvasDados = [];
+
+let idListaAtual = null;
 
 
 // =====================================================
-// GERAR ID PARA CADA ITEM
+// INICIALIZAÇÃO
+// =====================================================
+
+carregarListas();
+
+
+// =====================================================
+// GERAR IDENTIFICADOR
 // =====================================================
 
 function gerarId() {
 
-    return Date.now() +
-        Math.floor(Math.random() * 1000);
-
-}
-
-
-// =====================================================
-// SALVAR LISTA NO CELULAR
-// =====================================================
-
-function salvarLista() {
-
-    localStorage.setItem(
-        "listaComprasV11",
-        JSON.stringify(lista)
+    return (
+        Date.now().toString() +
+        "-" +
+        Math.floor(
+            Math.random() * 10000
+        ).toString()
     );
 
 }
 
 
 // =====================================================
-// CARREGAR LISTA DO CELULAR
+// DATA
 // =====================================================
 
-function carregarLista() {
+function obterDataAtual() {
+
+    const agora = new Date();
+
+    const dia =
+        String(
+            agora.getDate()
+        ).padStart(2, "0");
+
+    const mes =
+        String(
+            agora.getMonth() + 1
+        ).padStart(2, "0");
+
+    const ano =
+        agora.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+
+}
+
+
+// =====================================================
+// SALVAR NO LOCALSTORAGE
+// =====================================================
+
+function salvarListas() {
+
+    localStorage.setItem(
+        "listasComprasV11",
+        JSON.stringify(
+            listasSalvasDados
+        )
+    );
+
+}
+
+
+// =====================================================
+// CARREGAR LISTAS
+// =====================================================
+
+function carregarListas() {
 
     const dados =
-        localStorage.getItem("listaComprasV11");
+        localStorage.getItem(
+            "listasComprasV11"
+        );
 
 
     if (!dados) {
 
-        lista = [];
+        listasSalvasDados = [];
 
         return;
 
@@ -114,16 +237,17 @@ function carregarLista() {
 
     try {
 
-        lista = JSON.parse(dados);
+        listasSalvasDados =
+            JSON.parse(dados);
 
     } catch (erro) {
 
         console.error(
-            "Erro ao carregar lista:",
+            "Erro ao carregar listas:",
             erro
         );
 
-        lista = [];
+        listasSalvasDados = [];
 
     }
 
@@ -131,136 +255,48 @@ function carregarLista() {
 
 
 // =====================================================
-// MOSTRAR UMA TELA
+// MOSTRAR TELA
 // =====================================================
 
 function mostrarTela(tela) {
 
-    telaPrincipal.classList.add("escondido");
+    const telas = [
 
-    telaCriarLista.classList.add("escondido");
+        telaPrincipal,
 
-    telaComprar.classList.add("escondido");
+        telaCriarLista,
 
+        telaMinhasListas,
 
-    tela.classList.remove("escondido");
+        telaVisualizarLista,
 
-}
+        telaComprar
 
-
-// =====================================================
-// ATUALIZAR CONTADOR
-// =====================================================
-
-function atualizarContador() {
-
-    const quantidade =
-        lista.length;
+    ];
 
 
-    if (quantidade === 0) {
+    telas.forEach((telaItem) => {
 
-        contadorItens.textContent =
-            "0 itens";
+        if (telaItem) {
 
-    } else if (quantidade === 1) {
+            telaItem.classList.add(
+                "escondido"
+            );
 
-        contadorItens.textContent =
-            "1 item";
-
-    } else {
-
-        contadorItens.textContent =
-            quantidade + " itens";
-
-    }
-
-}
-
-
-// =====================================================
-// MOSTRAR OS ITENS DA LISTA
-// =====================================================
-
-function renderizarLista() {
-
-    listaItens.innerHTML = "";
-
-
-    atualizarContador();
-
-
-    if (lista.length === 0) {
-
-        listaItens.innerHTML = `
-            <p class="lista-vazia">
-                Nenhum item adicionado.
-            </p>
-        `;
-
-        return;
-
-    }
-
-
-    lista.forEach((item) => {
-
-        const elemento =
-            document.createElement("div");
-
-
-        elemento.className =
-            "item-lista";
-
-
-        elemento.innerHTML = `
-
-            <div class="item-lista-topo">
-
-                <span class="item-lista-nome">
-                    ${escaparHTML(item.nome)}
-                </span>
-
-                <span class="item-lista-quantidade">
-                    Qtd.: ${item.quantidade}
-                </span>
-
-            </div>
-
-
-            <div class="item-lista-acoes">
-
-                <button
-                    class="botao-editar"
-                    data-id="${item.id}"
-                >
-                    Editar
-                </button>
-
-                <button
-                    class="botao-excluir"
-                    data-id="${item.id}"
-                >
-                    Excluir
-                </button>
-
-            </div>
-
-        `;
-
-
-        listaItens.appendChild(elemento);
+        }
 
     });
 
 
-    configurarBotoesItens();
+    tela.classList.remove(
+        "escondido"
+    );
 
 }
 
 
 // =====================================================
-// PROTEÇÃO CONTRA HTML DIGITADO PELO USUÁRIO
+// ESCAPAR HTML
 // =====================================================
 
 function escaparHTML(texto) {
@@ -276,43 +312,28 @@ function escaparHTML(texto) {
 
 
 // =====================================================
-// CONFIGURAR BOTÕES EDITAR / EXCLUIR
+// CRIAR NOVA LISTA
 // =====================================================
 
-function configurarBotoesItens() {
+function iniciarNovaLista() {
 
-    const botoesEditar =
-        document.querySelectorAll(".botao-editar");
+    listaAtual = [];
 
+    idListaAtual = null;
 
-    const botoesExcluir =
-        document.querySelectorAll(".botao-excluir");
+    nomeLista.value = "";
 
+    nomeItem.value = "";
 
-    botoesEditar.forEach((botao) => {
+    quantidadeItem.value = "";
 
-        botao.addEventListener("click", () => {
+    renderizarItensLista();
 
-            editarItem(
-                Number(botao.dataset.id)
-            );
+    mostrarTela(
+        telaCriarLista
+    );
 
-        });
-
-    });
-
-
-    botoesExcluir.forEach((botao) => {
-
-        botao.addEventListener("click", () => {
-
-            excluirItem(
-                Number(botao.dataset.id)
-            );
-
-        });
-
-    });
+    nomeLista.focus();
 
 }
 
@@ -326,12 +347,13 @@ function adicionarItem() {
     const nome =
         nomeItem.value.trim();
 
-
     const quantidade =
-        Number(quantidadeItem.value);
+        Number(
+            quantidadeItem.value
+        );
 
 
-    if (nome === "") {
+    if (!nome) {
 
         alert(
             "Digite o nome do item."
@@ -360,7 +382,7 @@ function adicionarItem() {
     }
 
 
-    const novoItem = {
+    listaAtual.push({
 
         id: gerarId(),
 
@@ -372,25 +394,221 @@ function adicionarItem() {
 
         comprado: false
 
-    };
+    });
 
-
-    lista.push(novoItem);
-
-
-    salvarLista();
-
-    renderizarLista();
-
-
-    // Limpa os campos
 
     nomeItem.value = "";
 
     quantidadeItem.value = "";
 
 
+    salvarListaAtualTemporaria();
+
+    renderizarItensLista();
+
     nomeItem.focus();
+
+}
+
+
+// =====================================================
+// SALVAR LISTA ATUAL TEMPORARIAMENTE
+// =====================================================
+
+function salvarListaAtualTemporaria() {
+
+    localStorage.setItem(
+        "listaAtualComprasV11",
+        JSON.stringify({
+            nome: nomeLista.value.trim(),
+            itens: listaAtual
+        })
+    );
+
+}
+
+
+// =====================================================
+// CARREGAR LISTA TEMPORÁRIA
+// =====================================================
+
+function carregarListaTemporaria() {
+
+    const dados =
+        localStorage.getItem(
+            "listaAtualComprasV11"
+        );
+
+
+    if (!dados) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        const listaTemporaria =
+            JSON.parse(dados);
+
+
+        if (
+            listaTemporaria &&
+            Array.isArray(
+                listaTemporaria.itens
+            )
+        ) {
+
+            listaAtual =
+                listaTemporaria.itens;
+
+            nomeLista.value =
+                listaTemporaria.nome || "";
+
+            return true;
+
+        }
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao recuperar lista temporária:",
+            erro
+        );
+
+    }
+
+
+    return false;
+
+}
+
+
+// =====================================================
+// RENDERIZAR ITENS DA LISTA
+// =====================================================
+
+function renderizarItensLista() {
+
+    listaItens.innerHTML = "";
+
+
+    contadorItens.textContent =
+        listaAtual.length === 1
+            ? "1 item"
+            : `${listaAtual.length} itens`;
+
+
+    if (listaAtual.length === 0) {
+
+        listaItens.innerHTML = `
+            <p class="lista-vazia">
+                Nenhum item adicionado.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    listaAtual.forEach((item) => {
+
+        const elemento =
+            document.createElement("div");
+
+
+        elemento.className =
+            "item-lista";
+
+
+        elemento.innerHTML = `
+
+            <div class="item-lista-topo">
+
+                <span class="item-lista-nome">
+                    ${escaparHTML(item.nome)}
+                </span>
+
+                <span class="item-lista-quantidade">
+                    Qtd.: ${item.quantidade}
+                </span>
+
+            </div>
+
+            <div class="item-lista-acoes">
+
+                <button
+                    class="botao botao-editar"
+                    data-id="${item.id}"
+                >
+                    Editar
+                </button>
+
+                <button
+                    class="botao botao-excluir"
+                    data-id="${item.id}"
+                >
+                    Excluir
+                </button>
+
+            </div>
+        `;
+
+
+        listaItens.appendChild(
+            elemento
+        );
+
+    });
+
+
+    configurarBotoesLista();
+
+}
+
+
+// =====================================================
+// BOTÕES EDITAR / EXCLUIR
+// =====================================================
+
+function configurarBotoesLista() {
+
+    document
+        .querySelectorAll(".botao-editar")
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    editarItem(
+                        botao.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".botao-excluir")
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    excluirItem(
+                        botao.dataset.id
+                    );
+
+                }
+            );
+
+        });
 
 }
 
@@ -402,7 +620,10 @@ function adicionarItem() {
 function editarItem(id) {
 
     const item =
-        lista.find((item) => item.id === id);
+        listaAtual.find(
+            (item) =>
+                String(item.id) === String(id)
+        );
 
 
     if (!item) {
@@ -426,14 +647,927 @@ function editarItem(id) {
     }
 
 
-    const nomeLimpo =
+    const nome =
         novoNome.trim();
 
 
-    if (nomeLimpo === "") {
+    if (!nome) {
 
         alert(
-            "O nome do item não pode ficar vazio."
+            "O nome não pode ficar vazio."
+        );
+
+        return;
+
+    }
+
+
+    const novaQuantidade =
+        prompt(
+            "Quantidade:",
+            item.quantidade
+        );
+
+
+    if (novaQuantidade === null) {
+
+        return;
+
+    }
+
+
+    const quantidade =
+        Number(novaQuantidade);
+
+
+    if (
+        !Number.isInteger(quantidade) ||
+        quantidade <= 0
+    ) {
+
+        alert(
+            "Quantidade inválida."
+        );
+
+        return;
+
+    }
+
+
+    item.nome = nome;
+
+    item.quantidade = quantidade;
+
+
+    salvarListaAtualTemporaria();
+
+    renderizarItensLista();
+
+}
+
+
+// =====================================================
+// EXCLUIR ITEM
+// =====================================================
+
+function excluirItem(id) {
+
+    const item =
+        listaAtual.find(
+            (item) =>
+                String(item.id) === String(id)
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const confirmar =
+        confirm(
+            `Excluir "${item.nome}"?`
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    listaAtual =
+        listaAtual.filter(
+            (item) =>
+                String(item.id) !== String(id)
+        );
+
+
+    salvarListaAtualTemporaria();
+
+    renderizarItensLista();
+
+}
+
+
+// =====================================================
+// SALVAR LISTA PREPARADA
+// =====================================================
+
+function finalizarLista() {
+
+    const nome =
+        nomeLista.value.trim();
+
+
+    if (!nome) {
+
+        alert(
+            "Digite um nome para a lista."
+        );
+
+        nomeLista.focus();
+
+        return;
+
+    }
+
+
+    if (listaAtual.length === 0) {
+
+        alert(
+            "Adicione pelo menos um item."
+        );
+
+        return;
+
+    }
+
+
+    const novaLista = {
+
+        id: gerarId(),
+
+        nome: nome,
+
+        data: obterDataAtual(),
+
+        itens:
+            JSON.parse(
+                JSON.stringify(listaAtual)
+            )
+
+    };
+
+
+    listasSalvasDados.unshift(
+        novaLista
+    );
+
+
+    salvarListas();
+
+
+    localStorage.removeItem(
+        "listaAtualComprasV11"
+    );
+
+
+    listaAtual = [];
+
+    idListaAtual =
+        novaLista.id;
+
+
+    mostrarTela(
+        telaMinhasListas
+    );
+
+
+    renderizarListasSalvas();
+
+}
+
+
+// =====================================================
+// RENDERIZAR LISTAS SALVAS
+// =====================================================
+
+function renderizarListasSalvas() {
+
+    listasSalvas.innerHTML = "";
+
+
+    if (
+        listasSalvasDados.length === 0
+    ) {
+
+        listasSalvas.innerHTML = `
+            <div class="cartao">
+
+                <p class="lista-vazia">
+                    Nenhuma lista salva.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    listasSalvasDados.forEach(
+        (listaSalva) => {
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+
+            elemento.className =
+                "lista-salva";
+
+
+            elemento.innerHTML = `
+
+                <div class="lista-salva-topo">
+
+                    <div>
+
+                        <h3 class="lista-salva-nome">
+                            ${escaparHTML(
+                                listaSalva.nome
+                            )}
+                        </h3>
+
+                        <div class="lista-salva-data">
+                            ${listaSalva.data}
+                        </div>
+
+                    </div>
+
+                    <span class="lista-salva-id">
+                        ID: ${listaSalva.id}
+                    </span>
+
+                </div>
+
+
+                <div class="lista-salva-info">
+
+                    ${listaSalva.itens.length}
+                    ${
+                        listaSalva.itens.length === 1
+                            ? "item"
+                            : "itens"
+                    }
+
+                </div>
+
+
+                <div class="lista-salva-acoes">
+
+                    <button
+                        class="botao botao-principal botao-visualizar-lista"
+                        data-id="${listaSalva.id}"
+                    >
+                        Visualizar
+                    </button>
+
+                    <button
+                        class="botao botao-sucesso botao-usar-lista"
+                        data-id="${listaSalva.id}"
+                    >
+                        Usar novamente
+                    </button>
+
+                </div>
+
+            `;
+
+
+            listasSalvas.appendChild(
+                elemento
+            );
+
+        }
+    );
+
+
+    configurarBotoesListasSalvas();
+
+}
+
+
+// =====================================================
+// BOTÕES DAS LISTAS SALVAS
+// =====================================================
+
+function configurarBotoesListasSalvas() {
+
+    document
+        .querySelectorAll(
+            ".botao-visualizar-lista"
+        )
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    visualizarLista(
+                        botao.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(
+            ".botao-usar-lista"
+        )
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    usarListaNovamente(
+                        botao.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+// =====================================================
+// ENCONTRAR LISTA SALVA
+// =====================================================
+
+function encontrarLista(id) {
+
+    return listasSalvasDados.find(
+        (lista) =>
+            String(lista.id) === String(id)
+    );
+
+}
+
+
+// =====================================================
+// VISUALIZAR LISTA
+// =====================================================
+
+function visualizarLista(id) {
+
+    const lista =
+        encontrarLista(id);
+
+
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    idListaAtual =
+        lista.id;
+
+
+    tituloListaVisualizacao.textContent =
+        lista.nome;
+
+
+    informacoesListaVisualizacao.textContent =
+        `${lista.data} • ${lista.itens.length} ${
+            lista.itens.length === 1
+                ? "item"
+                : "itens"
+        }`;
+
+
+    itensListaVisualizacao.innerHTML = "";
+
+
+    lista.itens.forEach(
+        (item) => {
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+
+            elemento.className =
+                "item-visualizacao";
+
+
+            elemento.innerHTML = `
+
+                <div class="item-visualizacao-topo">
+
+                    <span class="item-visualizacao-nome">
+                        ${escaparHTML(item.nome)}
+                    </span>
+
+                    <span class="item-visualizacao-quantidade">
+                        Qtd.: ${item.quantidade}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            itensListaVisualizacao.appendChild(
+                elemento
+            );
+
+        }
+    );
+
+
+    mostrarTela(
+        telaVisualizarLista
+    );
+
+}
+
+
+// =====================================================
+// USAR LISTA NOVAMENTE
+// =====================================================
+
+function usarListaNovamente(id) {
+
+    const listaOriginal =
+        encontrarLista(id);
+
+
+    if (!listaOriginal) {
+
+        return;
+
+    }
+
+
+    const novaLista = {
+
+        id: gerarId(),
+
+        nome: listaOriginal.nome,
+
+        data: obterDataAtual(),
+
+        itens:
+            listaOriginal.itens.map(
+                (item) => ({
+
+                    id: gerarId(),
+
+                    nome: item.nome,
+
+                    quantidade: item.quantidade,
+
+                    valorUnitarioCentavos: 0,
+
+                    comprado: false
+
+                })
+            )
+
+    };
+
+
+    listaAtual =
+        novaLista.itens;
+
+
+    nomeLista.value =
+        novaLista.nome;
+
+
+    idListaAtual =
+        novaLista.id;
+
+
+    salvarListaAtualTemporaria();
+
+    renderizarItensLista();
+
+    mostrarTela(
+        telaCriarLista
+    );
+
+}
+
+
+// =====================================================
+// RENDERIZAR TELA DE COMPRA
+// =====================================================
+
+function renderizarTelaCompra(lista) {
+
+    tituloListaCompra.textContent =
+        lista.nome;
+
+
+    informacoesListaCompra.textContent =
+        `${lista.data} • ${lista.itens.length} ${
+            lista.itens.length === 1
+                ? "item"
+                : "itens"
+        }`;
+
+
+    listaCompra.innerHTML = "";
+
+
+    lista.itens.forEach(
+        (item) => {
+
+            const elemento =
+                document.createElement(
+                    "article"
+                );
+
+
+            elemento.className =
+                "item-compra";
+
+
+            if (item.comprado) {
+
+                elemento.classList.add(
+                    "comprado"
+                );
+
+            }
+
+
+            elemento.innerHTML = `
+
+                <div class="item-compra-topo">
+
+                    <span class="item-compra-nome">
+                        ${escaparHTML(item.nome)}
+                    </span>
+
+                    <span class="item-compra-quantidade">
+                        Qtd.: ${item.quantidade}
+                    </span>
+
+                </div>
+
+
+                <div class="item-compra-conteudo">
+
+                    <div>
+
+                        <label>
+                            Valor unitário
+                        </label>
+
+                        <input
+                            type="text"
+                            class="campo-valor-compra"
+                            inputmode="numeric"
+                            placeholder="R$ 0,00"
+                            autocomplete="off"
+                            data-id="${item.id}"
+                            value="${
+                                item.valorUnitarioCentavos > 0
+                                    ? centavosParaMoeda(
+                                        item.valorUnitarioCentavos
+                                    )
+                                    : ""
+                            }"
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="botao-comprado"
+                        data-id="${item.id}"
+                    >
+                        ${
+                            item.comprado
+                                ? "✓ Comprado"
+                                : "Marcar como comprado"
+                        }
+                    </button>
+
+                </div>
+
+
+                <div class="subtotal">
+
+                    Subtotal:
+
+                    <strong>
+                        ${centavosParaMoeda(
+                            item.valorUnitarioCentavos *
+                            item.quantidade
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="botao botao-editar-compra"
+                    data-id="${item.id}"
+                >
+                    Editar item
+                </button>
+
+            `;
+
+
+            listaCompra.appendChild(
+                elemento
+            );
+
+        }
+    );
+
+
+    configurarCamposCompra();
+
+    atualizarTotalCompra(
+        lista
+    );
+
+}
+
+
+// =====================================================
+// CENTAVOS → MOEDA
+// =====================================================
+
+function centavosParaMoeda(centavos) {
+
+    return (
+        centavos / 100
+    ).toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
+
+}
+
+
+// =====================================================
+// MÁSCARA MONETÁRIA
+// =====================================================
+//
+// 1    → R$ 0,01
+// 12   → R$ 0,12
+// 125  → R$ 1,25
+// 1250 → R$ 12,50
+//
+// O valor armazenado é inteiro em centavos.
+// =====================================================
+
+function configurarCamposCompra() {
+
+    document
+        .querySelectorAll(
+            ".campo-valor-compra"
+        )
+        .forEach((campo) => {
+
+            campo.addEventListener(
+                "input",
+                () => {
+
+                    const lista =
+                        encontrarLista(
+                            idListaAtual
+                        );
+
+
+                    if (!lista) {
+
+                        return;
+
+                    }
+
+
+                    const id =
+                        campo.dataset.id;
+
+
+                    const item =
+                        lista.itens.find(
+                            (item) =>
+                                String(item.id) ===
+                                String(id)
+                        );
+
+
+                    if (!item) {
+
+                        return;
+
+                    }
+
+
+                    let numeros =
+                        campo.value.replace(
+                            /\D/g,
+                            ""
+                        );
+
+
+                    if (
+                        numeros === ""
+                    ) {
+
+                        item.valorUnitarioCentavos =
+                            0;
+
+                        campo.value = "";
+
+                    } else {
+
+                        numeros =
+                            numeros.replace(
+                                /^0+(?=\d)/,
+                                ""
+                            );
+
+
+                        const centavos =
+                            Number(numeros);
+
+
+                        item.valorUnitarioCentavos =
+                            centavos;
+
+
+                        campo.value =
+                            centavosParaMoeda(
+                                centavos
+                            );
+
+                    }
+
+
+                    salvarListas();
+
+                    atualizarSubtotal(
+                        lista,
+                        item
+                    );
+
+                    atualizarTotalCompra(
+                        lista
+                    );
+
+                }
+            );
+
+        });
+
+
+    // -------------------------------------------------
+    // COMPRADO
+    // -------------------------------------------------
+
+    document
+        .querySelectorAll(
+            ".botao-comprado"
+        )
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    const lista =
+                        encontrarLista(
+                            idListaAtual
+                        );
+
+
+                    if (!lista) {
+
+                        return;
+
+                    }
+
+
+                    const item =
+                        lista.itens.find(
+                            (item) =>
+                                String(item.id) ===
+                                String(botao.dataset.id)
+                        );
+
+
+                    if (!item) {
+
+                        return;
+
+                    }
+
+
+                    item.comprado =
+                        !item.comprado;
+
+
+                    salvarListas();
+
+                    renderizarTelaCompra(
+                        lista
+                    );
+
+                }
+            );
+
+        });
+
+
+    // -------------------------------------------------
+    // EDITAR ITEM COMPRADO
+    // -------------------------------------------------
+
+    document
+        .querySelectorAll(
+            ".botao-editar-compra"
+        )
+        .forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    editarItemDuranteCompra(
+                        botao.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+// =====================================================
+// EDITAR ITEM DURANTE A COMPRA
+// =====================================================
+
+function editarItemDuranteCompra(id) {
+
+    const lista =
+        encontrarLista(
+            idListaAtual
+        );
+
+
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    const item =
+        lista.itens.find(
+            (item) =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const novoNome =
+        prompt(
+            "Nome do item:",
+            item.nome
+        );
+
+
+    if (novoNome === null) {
+
+        return;
+
+    }
+
+
+    const nome =
+        novoNome.trim();
+
+
+    if (!nome) {
+
+        alert(
+            "O nome não pode ficar vazio."
         );
 
         return;
@@ -474,364 +1608,76 @@ function editarItem(id) {
 
 
     item.nome =
-        nomeLimpo;
+        nome;
 
 
     item.quantidade =
         quantidade;
 
 
-    salvarLista();
+    salvarListas();
 
-    renderizarLista();
-
-}
-
-
-// =====================================================
-// EXCLUIR ITEM
-// =====================================================
-
-function excluirItem(id) {
-
-    const item =
-        lista.find((item) => item.id === id);
-
-
-    if (!item) {
-
-        return;
-
-    }
-
-
-    const confirmar =
-        confirm(
-            `Deseja excluir "${item.nome}"?`
-        );
-
-
-    if (!confirmar) {
-
-        return;
-
-    }
-
-
-    lista =
-        lista.filter(
-            (item) => item.id !== id
-        );
-
-
-    salvarLista();
-
-    renderizarLista();
+    renderizarTelaCompra(
+        lista
+    );
 
 }
 
 
 // =====================================================
-// FINALIZAR LISTA
+// ATUALIZAR SUBTOTAL
 // =====================================================
 
-function finalizarLista() {
+function atualizarSubtotal(
+    lista,
+    item
+) {
 
-    if (lista.length === 0) {
-
-        alert(
-            "Adicione pelo menos um item antes de finalizar."
+    const elementos =
+        document.querySelectorAll(
+            ".item-compra"
         );
 
-        return;
 
-    }
+    elementos.forEach(
+        (elemento) => {
 
-
-    renderizarTelaCompra();
-
-    mostrarTela(telaComprar);
-
-}
+            const botao =
+                elemento.querySelector(
+                    ".botao-comprado"
+                );
 
 
-// =====================================================
-// MOSTRAR TELA DE COMPRA
-// =====================================================
+            if (
+                !botao ||
+                String(
+                    botao.dataset.id
+                ) !== String(item.id)
+            ) {
 
-function renderizarTelaCompra() {
+                return;
 
-    listaCompra.innerHTML = "";
-
-
-    lista.forEach((item) => {
-
-        const elemento =
-            document.createElement("article");
+            }
 
 
-        elemento.className =
-            "item-compra";
+            const subtotal =
+                elemento.querySelector(
+                    ".subtotal strong"
+                );
 
 
-        if (item.comprado) {
+            if (subtotal) {
 
-            elemento.classList.add(
-                "comprado"
-            );
-
-        }
-
-
-        elemento.innerHTML = `
-
-            <div class="item-compra-topo">
-
-                <span class="item-compra-nome">
-                    ${escaparHTML(item.nome)}
-                </span>
-
-                <span class="item-compra-quantidade">
-                    Qtd.: ${item.quantidade}
-                </span>
-
-            </div>
-
-
-            <div class="item-compra-conteudo">
-
-                <div>
-
-                    <label>
-                        Valor unitário
-                    </label>
-
-                    <input
-                        type="text"
-                        class="campo-valor-compra"
-                        inputmode="numeric"
-                        placeholder="R$ 0,00"
-                        autocomplete="off"
-                        data-id="${item.id}"
-                        value="${item.valorUnitarioCentavos > 0
-                            ? centavosParaMoeda(item.valorUnitarioCentavos)
-                            : ""}"
-                    >
-
-                </div>
-
-
-                <button
-                    class="botao-comprado"
-                    data-id="${item.id}"
-                >
-                    ${item.comprado
-                        ? "✓ Comprado"
-                        : "Marcar como comprado"}
-                </button>
-
-            </div>
-
-
-            <div class="subtotal">
-
-                Subtotal:
-
-                <strong>
-                    ${centavosParaMoeda(
+                subtotal.textContent =
+                    centavosParaMoeda(
                         item.valorUnitarioCentavos *
                         item.quantidade
-                    )}
-                </strong>
-
-            </div>
-
-        `;
-
-
-        listaCompra.appendChild(elemento);
-
-    });
-
-
-    configurarCamposCompra();
-
-    atualizarTotalCompra();
-
-}
-
-
-// =====================================================
-// CENTAVOS → MOEDA
-// =====================================================
-
-function centavosParaMoeda(centavos) {
-
-    return (
-        centavos / 100
-    ).toLocaleString("pt-BR", {
-
-        style: "currency",
-
-        currency: "BRL"
-
-    });
-
-}
-
-
-// =====================================================
-// DIGITAÇÃO MONETÁRIA COM CENTAVOS
-// =====================================================
-//
-// 1      → R$ 0,01
-// 12     → R$ 0,12
-// 125    → R$ 1,25
-// 1250   → R$ 12,50
-//
-// O valor armazenado é sempre inteiro em centavos.
-// =====================================================
-
-function configurarCamposCompra() {
-
-    const campos =
-        document.querySelectorAll(
-            ".campo-valor-compra"
-        );
-
-
-    campos.forEach((campo) => {
-
-        campo.addEventListener(
-            "input",
-            () => {
-
-                let numeros =
-                    campo.value.replace(
-                        /\D/g,
-                        ""
                     );
-
-
-                if (numeros === "") {
-
-                    campo.value = "";
-
-
-                    const id =
-                        Number(campo.dataset.id);
-
-
-                    const item =
-                        lista.find(
-                            (item) => item.id === id
-                        );
-
-
-                    if (item) {
-
-                        item.valorUnitarioCentavos =
-                            0;
-
-                    }
-
-
-                    salvarLista();
-
-                    atualizarTotalCompra();
-
-                    return;
-
-                }
-
-
-                numeros =
-                    numeros.replace(
-                        /^0+(?=\d)/,
-                        ""
-                    );
-
-
-                const centavos =
-                    Number(numeros);
-
-
-                campo.value =
-                    centavosParaMoeda(
-                        centavos
-                    );
-
-
-                const id =
-                    Number(campo.dataset.id);
-
-
-                const item =
-                    lista.find(
-                        (item) => item.id === id
-                    );
-
-
-                if (item) {
-
-                    item.valorUnitarioCentavos =
-                        centavos;
-
-                }
-
-
-                salvarLista();
-
-                atualizarTotalCompra();
 
             }
-        );
 
-    });
-
-
-    const botoes =
-        document.querySelectorAll(
-            ".botao-comprado"
-        );
-
-
-    botoes.forEach((botao) => {
-
-        botao.addEventListener(
-            "click",
-            () => {
-
-                const id =
-                    Number(botao.dataset.id);
-
-
-                const item =
-                    lista.find(
-                        (item) => item.id === id
-                    );
-
-
-                if (!item) {
-
-                    return;
-
-                }
-
-
-                item.comprado =
-                    !item.comprado;
-
-
-                salvarLista();
-
-
-                renderizarTelaCompra();
-
-            }
-        );
-
-    });
+        }
+    );
 
 }
 
@@ -840,18 +1686,20 @@ function configurarCamposCompra() {
 // ATUALIZAR TOTAL
 // =====================================================
 
-function atualizarTotalCompra() {
+function atualizarTotalCompra(lista) {
 
     let totalCentavos = 0;
 
 
-    lista.forEach((item) => {
+    lista.itens.forEach(
+        (item) => {
 
-        totalCentavos +=
-            item.valorUnitarioCentavos *
-            item.quantidade;
+            totalCentavos +=
+                item.valorUnitarioCentavos *
+                item.quantidade;
 
-    });
+        }
+    );
 
 
     totalCompra.textContent =
@@ -863,23 +1711,63 @@ function atualizarTotalCompra() {
 
 
 // =====================================================
-// BOTÃO CRIAR NOVA LISTA
+// FINALIZAR COMPRA
+// =====================================================
+
+function finalizarCompra() {
+
+    const lista =
+        encontrarLista(
+            idListaAtual
+        );
+
+
+    if (!lista) {
+
+        return;
+
+    }
+
+
+    salvarListas();
+
+    alert(
+        "Compra finalizada."
+    );
+
+
+    mostrarTela(
+        telaMinhasListas
+    );
+
+    renderizarListasSalvas();
+
+}
+
+
+// =====================================================
+// BOTÃO CRIAR LISTA
 // =====================================================
 
 botaoCriarLista.addEventListener(
     "click",
+    iniciarNovaLista
+);
+
+
+// =====================================================
+// BOTÃO MINHAS LISTAS
+// =====================================================
+
+botaoMinhasListas.addEventListener(
+    "click",
     () => {
 
-        lista = [];
+        renderizarListasSalvas();
 
-
-        salvarLista();
-
-        renderizarLista();
-
-        mostrarTela(telaCriarLista);
-
-        nomeItem.focus();
+        mostrarTela(
+            telaMinhasListas
+        );
 
     }
 );
@@ -896,14 +1784,16 @@ botaoAdicionarItem.addEventListener(
 
 
 // =====================================================
-// ENTER NO CAMPO NOME
+// ENTER - NOME DO ITEM
 // =====================================================
 
 nomeItem.addEventListener(
     "keydown",
     (evento) => {
 
-        if (evento.key === "Enter") {
+        if (
+            evento.key === "Enter"
+        ) {
 
             quantidadeItem.focus();
 
@@ -914,14 +1804,16 @@ nomeItem.addEventListener(
 
 
 // =====================================================
-// ENTER NO CAMPO QUANTIDADE
+// ENTER - QUANTIDADE
 // =====================================================
 
 quantidadeItem.addEventListener(
     "keydown",
     (evento) => {
 
-        if (evento.key === "Enter") {
+        if (
+            evento.key === "Enter"
+        ) {
 
             adicionarItem();
 
@@ -932,7 +1824,17 @@ quantidadeItem.addEventListener(
 
 
 // =====================================================
-// FINALIZAR LISTA
+// ALTERAÇÃO DO NOME DA LISTA
+// =====================================================
+
+nomeLista.addEventListener(
+    "input",
+    salvarListaAtualTemporaria
+);
+
+
+// =====================================================
+// SALVAR LISTA
 // =====================================================
 
 botaoFinalizarLista.addEventListener(
@@ -942,42 +1844,167 @@ botaoFinalizarLista.addEventListener(
 
 
 // =====================================================
-// VOLTAR PARA MENU PRINCIPAL
+// CANCELAR CRIAÇÃO
 // =====================================================
 
-botaoVoltarPrincipal.addEventListener(
+botaoCancelarLista.addEventListener(
     "click",
     () => {
 
-        mostrarTela(telaPrincipal);
+        const confirmar =
+            confirm(
+                "Cancelar esta lista?"
+            );
+
+
+        if (!confirmar) {
+
+            return;
+
+        }
+
+
+        listaAtual = [];
+
+        nomeLista.value = "";
+
+        nomeItem.value = "";
+
+        quantidadeItem.value = "";
+
+        localStorage.removeItem(
+            "listaAtualComprasV11"
+        );
+
+        mostrarTela(
+            telaPrincipal
+        );
 
     }
 );
 
 
 // =====================================================
-// VOLTAR PARA LISTA
+// VOLTAR DO MENU DE LISTAS
+// =====================================================
+
+botaoVoltarPrincipalListas.addEventListener(
+    "click",
+    () => {
+
+        mostrarTela(
+            telaPrincipal
+        );
+
+    }
+);
+
+
+// =====================================================
+// VOLTAR PARA MINHAS LISTAS
+// =====================================================
+
+botaoVoltarMinhasListas.addEventListener(
+    "click",
+    () => {
+
+        renderizarListasSalvas();
+
+        mostrarTela(
+            telaMinhasListas
+        );
+
+    }
+);
+
+
+// =====================================================
+// USAR LISTA NOVAMENTE
+// =====================================================
+
+botaoUsarListaVisualizacao.addEventListener(
+    "click",
+    () => {
+
+        if (!idListaAtual) {
+
+            return;
+
+        }
+
+
+        usarListaNovamente(
+            idListaAtual
+        );
+
+    }
+);
+
+
+// =====================================================
+// FINALIZAR COMPRA
+// =====================================================
+
+botaoFinalizarCompra.addEventListener(
+    "click",
+    finalizarCompra
+);
+
+
+// =====================================================
+// VOLTAR PARA A LISTA
 // =====================================================
 
 botaoVoltarLista.addEventListener(
     "click",
     () => {
 
-        renderizarLista();
+        const lista =
+            encontrarLista(
+                idListaAtual
+            );
 
-        mostrarTela(telaCriarLista);
+
+        if (!lista) {
+
+            mostrarTela(
+                telaMinhasListas
+            );
+
+            return;
+
+        }
+
+
+        listaAtual =
+            lista.itens;
+
+
+        nomeLista.value =
+            lista.nome;
+
+
+        renderizarItensLista();
+
+        mostrarTela(
+            telaCriarLista
+        );
 
     }
 );
 
 
 // =====================================================
-// INICIALIZAÇÃO
+// RECUPERAR RASCUNHO AO INICIAR
 // =====================================================
 
-carregarLista();
+if (
+    carregarListaTemporaria()
+) {
 
-renderizarLista();
+    renderizarItensLista();
+
+}
 
 
 // =====================================================
